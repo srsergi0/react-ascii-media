@@ -9,7 +9,6 @@ import { CodeImage } from './lib/components/CodeImage';
 import { VideoSource, AsciiSettings, ColorMode, DensityPreset } from './lib/types';
 
 import { 
-  Circle, 
   Upload, 
   Video, 
   Copy, 
@@ -325,54 +324,50 @@ export default function App() {
   };
 
   // Generate copyable JSX code snippets representing current configuration
-  const videoCodeSnippet = `import { CodeVideo } from './components/CodeVideo';
+  const videoCodeSnippet = `import { CodeVideo } from 'react-ascii-media';
 
-export default function App() {
+export default function VideoDemo() {
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <CodeVideo
-        src="${videoSource?.type === 'file' ? 'path/to/your-video.mp4' : 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4'}"
-        fontSize={${settings.fontSize}}
-        colorMode="${settings.colorMode}"
-        densityPreset="${settings.densityPreset}"${settings.customDensity ? `\n        customDensity="${settings.customDensity}"` : ''}
-        brightness={${settings.brightness}}
-        contrast={${settings.contrast}}
-        saturation={${settings.saturation}}
-        pdhThreshold={${settings.pdhThreshold}}
-        asciiOpacity={${settings.asciiOpacity}}
-        videoOpacity={${settings.videoOpacity}}
-        customControls={${customControls}}
-        autoPlay
-        loop
-        muted
-        className="w-full shadow-2xl rounded-xl border border-white/10"
-      />
-    </div>
+    <CodeVideo
+      src="path/to/your-video.mp4"
+      fontSize={${settings.fontSize}}
+      colorMode="${settings.colorMode}"
+      densityPreset="${settings.densityPreset}"${settings.customDensity ? `\n      customDensity="${settings.customDensity}"` : ''}
+      brightness={${settings.brightness}}
+      contrast={${settings.contrast}}
+      saturation={${settings.saturation}}
+      pdhThreshold={${settings.pdhThreshold}}
+      asciiOpacity={${settings.asciiOpacity}}
+      videoOpacity={${settings.videoOpacity}}
+      customControls={${customControls}}
+      autoPlay
+      loop
+      muted
+      className="w-full rounded-xl"
+    />
   );
 }`;
 
-  const imageCodeSnippet = `import { CodeImage } from './components/CodeImage';
+  const imageCodeSnippet = `import { CodeImage } from 'react-ascii-media';
 
-export default function App() {
+export default function ImageDemo() {
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <CodeImage
-        src="${imageSource?.file ? 'path/to/your-image.jpg' : 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800'}"
-        fontSize={${settings.fontSize}}
-        colorMode="${settings.colorMode}"
-        densityPreset="${settings.densityPreset}"${settings.customDensity ? `\n        customDensity="${settings.customDensity}"` : ''}
-        brightness={${settings.brightness}}
-        contrast={${settings.contrast}}
-        saturation={${settings.saturation}}
-        asciiOpacity={${settings.asciiOpacity}}
-        imageOpacity={${settings.videoOpacity}}
-        className="w-full shadow-2xl rounded-xl border border-white/10"
-      />
-    </div>
+    <CodeImage
+      src="path/to/your-image.jpg"
+      fontSize={${settings.fontSize}}
+      colorMode="${settings.colorMode}"
+      densityPreset="${settings.densityPreset}"${settings.customDensity ? `\n      customDensity="${settings.customDensity}"` : ''}
+      brightness={${settings.brightness}}
+      contrast={${settings.contrast}}
+      saturation={${settings.saturation}}
+      asciiOpacity={${settings.asciiOpacity}}
+      imageOpacity={${settings.videoOpacity}}
+      className="w-full rounded-xl"
+    />
   );
 }`;
 
-  const currentCodeSnippet = mediaMode === 'video' ? videoCodeSnippet : imageCodeSnippet;
+  const currentCodeSnippet = `${videoCodeSnippet}\n\n${imageCodeSnippet}`;
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(currentCodeSnippet);
@@ -399,26 +394,28 @@ export default function App() {
         </div>
       )}
 
-      {/* Header Bento Top Bar */}
+      {/* Header */}
       <header id="main-navigation-header" className="w-full max-w-7xl px-6 py-5 flex items-center justify-between border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="relative flex items-center justify-center">
-            <span className="absolute inline-flex h-2 w-2 rounded-full bg-accent opacity-75 animate-ping" />
-            <Circle className="w-2.5 h-2.5 text-accent fill-accent relative" />
-          </div>
           <div className="flex flex-col">
-            <h1 className="font-sans font-extrabold text-sm tracking-[0.15em] text-accent uppercase flex items-center gap-1.5">
-              <span>&lt;CodeASCII /&gt;</span>
-              <span className="text-white/80">STUDIO</span>
+            <h1 className="font-sans font-extrabold text-sm tracking-[0.15em] text-white flex items-center gap-1.5">
+              <span className="text-accent">react-ascii-media</span>
+              <span className="text-white/40 font-normal text-[11px]">v1.0.0</span>
             </h1>
-            <span className="text-[9px] font-mono text-white/30 tracking-wider">ULTRA HD CLIENTSIDE ASCII GENERATOR</span>
+            <span className="text-[9px] font-mono text-white/30 tracking-wider">VIDEO & IMAGE TO ASCII ART CONVERTER</span>
           </div>
         </div>
-
       </header>
 
       {/* Main Workspace Stage */}
-      <main id="app-content-stage" className="flex-1 w-full max-w-7xl px-6 py-8 flex flex-col gap-8">
+      <main id="app-content-stage" className="flex-1 w-full max-w-7xl px-6 py-8 flex flex-col gap-6">
+
+        {/* Install */}
+        <div className="p-4 rounded-xl bg-surface border border-white/10 flex items-center gap-3 font-mono text-xs">
+          <span className="text-white/40">npm install</span>
+          <code className="text-accent font-bold">react-ascii-media</code>
+          <a href="https://www.npmjs.com/package/react-ascii-media" target="_blank" rel="noopener noreferrer" className="ml-auto text-white/30 hover:text-accent transition-colors underline underline-offset-2">npmjs.com/package/react-ascii-media</a>
+        </div>
 
         {/* Dynamic Studio Split Workspace */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -688,33 +685,33 @@ export default function App() {
                 {/* 3. Integration Guide Tab */}
                 {activeTab === 'install' && (
                   <div className="flex flex-col gap-4 text-white/75 animate-fade-in">
-                    <h3 className="font-sans font-bold text-sm text-white border-b border-white/10 pb-1 uppercase tracking-wider">Project Integration Guide</h3>
-                    
-                    <ol className="list-decimal pl-5 flex flex-col gap-3 text-[11px]">
-                      <li>
-                        <strong className="text-white font-sans">Copy Component Code:</strong>
-                        <p className="mt-1">
-                          In your repository, transfer the components directly:
-                        </p>
-                        <ul className="list-disc pl-5 mt-1 text-white/60 flex flex-col gap-0.5">
-                          <li>Create <code className="text-accent">src/types.ts</code> containing core declarations.</li>
-                          <li>Create <code className="text-accent">src/components/CodeVideo.tsx</code> or <code className="text-accent">CodeImage.tsx</code>.</li>
-                          <li>Create corresponding WebGL handlers <code className="text-accent">AsciiCanvas.tsx</code> and <code className="text-accent">AsciiImageCanvas.tsx</code>.</li>
+                    <h3 className="font-sans font-bold text-sm text-white border-b border-white/10 pb-1 uppercase tracking-wider">Getting Started</h3>
+
+                    <div className="flex flex-col gap-3 text-[11px]">
+                      <div>
+                        <strong className="text-white font-sans">Install</strong>
+                        <pre className="mt-1 p-3 rounded-lg bg-black/60 border border-white/5 text-accent font-mono text-[11px]">npm install react-ascii-media</pre>
+                      </div>
+
+                      <div>
+                        <strong className="text-white font-sans">Import</strong>
+                        <pre className="mt-1 p-3 rounded-lg bg-black/60 border border-white/5 text-emerald-400 font-mono text-[11px] leading-relaxed">{`import { CodeVideo, CodeImage } from 'react-ascii-media';`}</pre>
+                      </div>
+
+                      <div>
+                        <strong className="text-white font-sans">Features</strong>
+                        <ul className="list-disc pl-5 mt-1 text-white/60 flex flex-col gap-1">
+                          <li>WebGL-accelerated GPU shader rendering at 60fps</li>
+                          <li>Canvas 2D fallback when WebGL is unavailable</li>
+                          <li>5 color modes: RGB, Cyberpunk, Matrix Green, CRT Amber, Monochrome</li>
+                          <li>10+ glyph sets: standard, blocks, braille, matrix, math, stars, cards, detailed, alphanumeric, binary</li>
+                          <li>Custom density sequences (use any characters)</li>
+                          <li>Visual filters: brightness, contrast, saturation</li>
+                          <li>Delta-encoding for CPU-efficient partial re-renders</li>
+                          <li>No external CSS or font dependencies</li>
                         </ul>
-                      </li>
-                      <li>
-                        <strong className="text-white font-sans">Responsive Rendering:</strong>
-                        <p className="mt-1 font-sans">
-                          Both components integrate a <code className="text-emerald-400">ResizeObserver</code> inside their canvases. Simply fit them inside any parent layout container and they will auto-scale dynamically!
-                        </p>
-                      </li>
-                      <li>
-                        <strong className="text-white font-sans">WebGL Capabilities:</strong>
-                        <p className="mt-1">
-                          Calculations are offloaded directly to GPU shader operations, allowing you to run multiple full-color, high-density conversions simultaneously at 60 FPS without slowing down user interactions.
-                        </p>
-                      </li>
-                    </ol>
+                      </div>
+                    </div>
                   </div>
                 )}
 
