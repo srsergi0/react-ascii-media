@@ -1,0 +1,64 @@
+{
+  "name": "react-ascii-media",
+  "version": "1.0.0",
+  "description": "Real-time video & image to full-color RGB ASCII art converter. WebGL-accelerated React components with 60fps performance.",
+  "type": "module",
+  "main": "dist-lib/index.cjs.js",
+  "module": "dist-lib/index.es.js",
+  "types": "dist-lib/index.d.ts",
+  "files": [
+    "dist-lib"
+  ],
+  "scripts": {
+    "dev": "vite --port=3000 --host=0.0.0.0",
+    "build": "vite build --config vite.lib.config.ts",
+    "build:demo": "vite build",
+    "preview": "vite preview",
+    "clean": "if (Test-Path dist) { Remove-Item -Recurse -Force dist }; if (Test-Path dist-lib) { Remove-Item -Recurse -Force dist-lib }",
+    "lint": "tsc --noEmit"
+  },
+  "homepage": "https://YOUR_USERNAME.github.io/react-ascii-media",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YOUR_USERNAME/react-ascii-media.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/react-ascii-media/issues"
+  },
+  "keywords": [
+    "react",
+    "ascii",
+    "ascii-art",
+    "video",
+    "image",
+    "converter",
+    "webgl",
+    "shader",
+    "react-component",
+    "rgb-ascii",
+    "media-to-ascii"
+  ],
+  "license": "Apache-2.0",
+  "author": "",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "@google/genai": "^2.4.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vitejs/plugin-react": "^5.0.4",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "autoprefixer": "^10.4.21",
+    "esbuild": "^0.25.0",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.3",
+    "vite-plugin-dts": "^4.5.3"
+  }
+}

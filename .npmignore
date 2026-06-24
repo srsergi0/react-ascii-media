@@ -1,0 +1,14 @@
+src/
+demo/
+public/
+assets/
+.github/
+vite.config.ts
+vite.lib.config.ts
+tsconfig.json
+metadata.json
+.env.example
+.gitignore
+.npmignore
+node_modules/
+dist/
