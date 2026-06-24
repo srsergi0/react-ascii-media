@@ -22,14 +22,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 20
+          bun-version: latest
 
-      - run: npm ci
+      - run: bun install --frozen-lockfile
 
       - name: Build demo site
-        run: npm run build:demo
+        run: bun run build:demo
 
       - uses: actions/configure-pages@v4
 
