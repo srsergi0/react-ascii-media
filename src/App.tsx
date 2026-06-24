@@ -32,9 +32,9 @@ export default function App() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const imageFileInputRef = useRef<HTMLInputElement | null>(null);
-
-  // Studio media mode: switch between full-motion video or static high-fidelity image
   const [mediaMode, setMediaMode] = useState<'video' | 'image'>('video');
+
+
 
   // Video settings passed to <CodeVideo /> and <CodeImage />
   const [settings, setSettings] = useState<AsciiSettings>({
@@ -98,10 +98,8 @@ export default function App() {
       if (e.dataTransfer?.files && e.dataTransfer.files[0]) {
         const file = e.dataTransfer.files[0];
         if (file.type.startsWith('video/')) {
-          setMediaMode('video');
           handleVideoFileSelect(file);
         } else if (file.type.startsWith('image/')) {
-          setMediaMode('image');
           handleImageFileSelect(file);
         } else {
           alert('Format not recognized. Please provide a video (.mp4/.mov) or an image (.png/.jpg/.webp).');
@@ -422,53 +420,20 @@ export default function App() {
       {/* Main Workspace Stage */}
       <main id="app-content-stage" className="flex-1 w-full max-w-7xl px-6 py-8 flex flex-col gap-8">
 
-        {/* Media Mode Tabs Segmented Selector */}
-        <div className="flex items-center justify-center p-1 rounded-xl bg-surface border border-white/10 max-w-sm mx-auto relative shadow-md">
-          <button
-            onClick={() => setMediaMode('video')}
-            className={`flex-1 py-2 rounded-lg text-[11px] font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all duration-300 ${
-              mediaMode === 'video'
-                ? 'bg-accent/15 text-accent border border-accent/20 font-bold shadow-[0_0_15px_rgba(0,255,148,0.1)]'
-                : 'text-white/50 hover:text-white hover:bg-white/[0.02] border border-transparent'
-            }`}
-          >
-            <Video className="w-3.5 h-3.5" />
-            <span>Video Converter</span>
-          </button>
-          <button
-            onClick={() => setMediaMode('image')}
-            className={`flex-1 py-2 rounded-lg text-[11px] font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all duration-300 ${
-              mediaMode === 'image'
-                ? 'bg-accent/15 text-accent border border-accent/20 font-bold shadow-[0_0_15px_rgba(0,255,148,0.1)]'
-                : 'text-white/50 hover:text-white hover:bg-white/[0.02] border border-transparent'
-            }`}
-          >
-            <ImageIcon className="w-3.5 h-3.5" />
-            <span>Image Converter</span>
-          </button>
-        </div>
-
         {/* Dynamic Studio Split Workspace */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Live Render Box & Developer Integration Drawer */}
           <div className="lg:col-span-7 flex flex-col gap-6">
             
-            {/* Visual Header */}
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/50 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
-                Live Component Preview ({mediaMode === 'video' ? 'CodeVideo' : 'CodeImage'})
-              </span>
-              <span className="font-mono text-[9px] text-white/30 truncate max-w-[250px]">
-                Active: {mediaMode === 'video' ? (videoSource?.name || 'Empty') : (imageSource?.name || 'Empty')}
-              </span>
-            </div>
-
-            {/* Render Stage: Video vs Image component rendering */}
-            <div className="w-full relative group">
-              {mediaMode === 'video' ? (
-                videoSource ? (
+            {/* Render Stage: Video + Image stacked */}
+            <div className="flex flex-col gap-4">
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/50 flex items-center gap-1.5 mb-2">
+                  <span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
+                  Video ASCII
+                </span>
+                {videoSource ? (
                   <CodeVideo
                     ref={videoRef}
                     src={videoSource.url || ''}
@@ -494,9 +459,15 @@ export default function App() {
                     <Video className="w-12 h-12 text-white/20 animate-pulse" />
                     <span className="text-xs font-mono text-white/50">No video source loaded</span>
                   </div>
-                )
-              ) : (
-                imageSource ? (
+                )}
+              </div>
+
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/50 flex items-center gap-1.5 mb-2">
+                  <span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
+                  Image ASCII
+                </span>
+                {imageSource ? (
                   <>
                     <CodeImage
                       id="ascii-image-element"
@@ -512,7 +483,6 @@ export default function App() {
                       imageOpacity={settings.videoOpacity}
                       className="shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-white/10 rounded-xl w-full"
                     />
-                    {/* Render a hidden image for calculations if the source has CORS issues */}
                     <img 
                       id="ascii-image-element" 
                       src={imageSource.url || ''} 
@@ -526,8 +496,8 @@ export default function App() {
                     <ImageIcon className="w-12 h-12 text-white/20 animate-pulse" />
                     <span className="text-xs font-mono text-white/50">No image source loaded</span>
                   </div>
-                )
-              )}
+                )}
+              </div>
             </div>
 
             {/* Developer Integration Tabs Drawer */}
