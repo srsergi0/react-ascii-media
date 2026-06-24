@@ -417,12 +417,10 @@ export default function App() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 text-xs font-mono">
       </header>
 
       {/* Main Workspace Stage */}
       <main id="app-content-stage" className="flex-1 w-full max-w-7xl px-6 py-8 flex flex-col gap-8">
-        
 
         {/* Media Mode Tabs Segmented Selector */}
         <div className="flex items-center justify-center p-1 rounded-xl bg-surface border border-white/10 max-w-sm mx-auto relative shadow-md">
