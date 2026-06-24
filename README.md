@@ -76,7 +76,7 @@ Works in any browser with WebGL support (Chrome, Firefox, Safari 15+, Edge). Fal
 ## Development
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/react-ascii-media.git
+git clone https://github.com/srsergi0/react-ascii-media.git
 cd react-ascii-media
 npm install
 npm run dev

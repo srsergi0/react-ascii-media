@@ -17,13 +17,13 @@
     "clean": "if (Test-Path dist) { Remove-Item -Recurse -Force dist }; if (Test-Path dist-lib) { Remove-Item -Recurse -Force dist-lib }",
     "lint": "tsc --noEmit"
   },
-  "homepage": "https://YOUR_USERNAME.github.io/react-ascii-media",
+  "homepage": "https://srsergi0.github.io/react-ascii-media",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOUR_USERNAME/react-ascii-media.git"
+    "url": "git+https://github.com/srsergi0/react-ascii-media.git"
   },
   "bugs": {
-    "url": "https://github.com/YOUR_USERNAME/react-ascii-media/issues"
+    "url": "https://github.com/srsergi0/react-ascii-media/issues"
   },
   "keywords": [
     "react",
