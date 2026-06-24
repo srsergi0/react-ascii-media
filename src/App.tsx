@@ -9,7 +9,6 @@ import { CodeImage } from './lib/components/CodeImage';
 import { VideoSource, AsciiSettings, ColorMode, DensityPreset } from './lib/types';
 
 import { 
-  Sparkles, 
   Circle, 
   Upload, 
   Video, 
@@ -169,100 +168,6 @@ export default function App() {
       url: fileUrl,
       file: file,
     });
-  };
-
-  const handleApplyPreset = (presetName: string) => {
-    switch (presetName) {
-      case 'cyberpunk':
-        setSettings({
-          fontSize: 6,
-          colorMode: 'cyberpunk',
-          densityPreset: 'matrix',
-          customDensity: '',
-          brightness: 1.25,
-          contrast: 1.2,
-          saturation: 1.4,
-          enableDeltaRendering: true,
-          pdhThreshold: 20,
-          asciiOpacity: 1.0,
-          videoOpacity: 0.0,
-        });
-        break;
-      case 'matrix':
-        setSettings({
-          fontSize: 7,
-          colorMode: 'green',
-          densityPreset: 'binary',
-          customDensity: '',
-          brightness: 1.2,
-          contrast: 1.15,
-          saturation: 1.0,
-          enableDeltaRendering: true,
-          pdhThreshold: 15,
-          asciiOpacity: 1.0,
-          videoOpacity: 0.0,
-        });
-        break;
-      case 'crt-amber':
-        setSettings({
-          fontSize: 8,
-          colorMode: 'amber',
-          densityPreset: 'standard',
-          customDensity: '',
-          brightness: 1.1,
-          contrast: 1.3,
-          saturation: 1.0,
-          enableDeltaRendering: true,
-          pdhThreshold: 18,
-          asciiOpacity: 1.0,
-          videoOpacity: 0.0,
-        });
-        break;
-      case 'high-fidelity':
-        setSettings({
-          fontSize: 5,
-          colorMode: 'rgb',
-          densityPreset: 'blocks',
-          customDensity: '',
-          brightness: 1.1,
-          contrast: 1.2,
-          saturation: 1.3,
-          enableDeltaRendering: true,
-          pdhThreshold: 12,
-          asciiOpacity: 1.0,
-          videoOpacity: 0.0,
-        });
-        break;
-      case 'classic-ascii':
-        setSettings({
-          fontSize: 7,
-          colorMode: 'mono',
-          densityPreset: 'standard',
-          customDensity: '',
-          brightness: 1.15,
-          contrast: 1.2,
-          saturation: 1.0,
-          enableDeltaRendering: true,
-          pdhThreshold: 18,
-          asciiOpacity: 1.0,
-          videoOpacity: 0.0,
-        });
-        break;
-      default:
-        setSettings({
-          fontSize: 7,
-          colorMode: 'rgb',
-          densityPreset: 'standard',
-          customDensity: '',
-          brightness: 1.15,
-          contrast: 1.1,
-          saturation: 1.25,
-          enableDeltaRendering: true,
-          pdhThreshold: 18,
-          asciiOpacity: 1.0,
-          videoOpacity: 0.0,
-        });
-    }
   };
 
   // Convert density settings into an array of characters
@@ -513,83 +418,11 @@ export default function App() {
         </div>
 
         <div className="flex items-center gap-4 text-xs font-mono">
-          <button 
-            onClick={() => {
-              if (mediaMode === 'video') loadDemoVideo();
-              else loadDemoImage();
-            }}
-            className="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 transition-all text-[11px]"
-          >
-            <RefreshCw className="w-3 h-3" />
-            Reset {mediaMode === 'video' ? 'Video' : 'Image'} Demo
-          </button>
-          <span className="text-[10px] font-mono text-accent border border-accent/20 rounded px-2 py-0.5 bg-accent/5">
-            React Components v1.2
-          </span>
-        </div>
       </header>
 
       {/* Main Workspace Stage */}
       <main id="app-content-stage" className="flex-1 w-full max-w-7xl px-6 py-8 flex flex-col gap-8">
         
-        {/* Intro Banner */}
-        <div className="p-6 rounded-2xl bg-surface border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-accent/5 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-          <div className="relative z-10 flex flex-col gap-1.5 max-w-2xl">
-            <h2 className="font-sans font-bold text-lg md:text-xl text-white tracking-tight flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-accent animate-pulse" />
-              Configure & Copy &lt;CodeASCII /&gt; Components
-            </h2>
-            <p className="font-sans text-white/60 text-xs md:text-sm leading-relaxed">
-              Experience the optimized WebGL ASCII renderer encapsulated into highly portable, fully reusable React components. 
-              Load local videos/images, adjust parameters in real-time, and grab the code instantly!
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2 shrink-0 relative z-10">
-            <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest block w-full mb-1">Aesthetic Presets:</span>
-            <button 
-              onClick={() => handleApplyPreset('cyberpunk')} 
-              className={`px-2.5 py-1.5 rounded-lg font-mono text-[10px] uppercase border transition-all ${
-                settings.colorMode === 'cyberpunk' ? 'bg-accent/10 border-accent text-accent' : 'bg-[#151515] border-white/10 text-white/60 hover:text-white hover:border-white/25'
-              }`}
-            >
-              Cyberpunk
-            </button>
-            <button 
-              onClick={() => handleApplyPreset('matrix')} 
-              className={`px-2.5 py-1.5 rounded-lg font-mono text-[10px] uppercase border transition-all ${
-                settings.colorMode === 'green' ? 'bg-accent/10 border-accent text-accent' : 'bg-[#151515] border-white/10 text-white/60 hover:text-white hover:border-white/25'
-              }`}
-            >
-              Matrix
-            </button>
-            <button 
-              onClick={() => handleApplyPreset('crt-amber')} 
-              className={`px-2.5 py-1.5 rounded-lg font-mono text-[10px] uppercase border transition-all ${
-                settings.colorMode === 'amber' ? 'bg-accent/10 border-accent text-accent' : 'bg-[#151515] border-white/10 text-white/60 hover:text-white hover:border-white/25'
-              }`}
-            >
-              CRT Amber
-            </button>
-            <button 
-              onClick={() => handleApplyPreset('high-fidelity')} 
-              className={`px-2.5 py-1.5 rounded-lg font-mono text-[10px] uppercase border transition-all ${
-                settings.colorMode === 'rgb' && settings.densityPreset === 'blocks' ? 'bg-accent/10 border-accent text-accent' : 'bg-[#151515] border-white/10 text-white/60 hover:text-white hover:border-white/25'
-              }`}
-            >
-              Hi-Fi Blocks
-            </button>
-            <button 
-              onClick={() => handleApplyPreset('classic-ascii')} 
-              className={`px-2.5 py-1.5 rounded-lg font-mono text-[10px] uppercase border transition-all ${
-                settings.colorMode === 'mono' ? 'bg-accent/10 border-accent text-accent' : 'bg-[#151515] border-white/10 text-white/60 hover:text-white hover:border-white/25'
-              }`}
-            >
-              Classic Mono
-            </button>
-          </div>
-        </div>
 
         {/* Media Mode Tabs Segmented Selector */}
         <div className="flex items-center justify-center p-1 rounded-xl bg-surface border border-white/10 max-w-sm mx-auto relative shadow-md">
