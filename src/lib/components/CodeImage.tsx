@@ -50,6 +50,7 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
   const [hovered, setHovered] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(16 / 9);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [canvasReady, setCanvasReady] = useState(false);
   const [triggerRender, setTriggerRender] = useState(0);
 
   const effectiveFontSize = hovered ? hoverFontSize : fontSize;
@@ -81,6 +82,10 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
     }
   };
 
+  const handleCanvasReady = () => {
+    setCanvasReady(true);
+  };
+
   useEffect(() => {
     const img = localImageRef.current;
     if (img && img.complete && img.naturalWidth > 0) {
@@ -108,7 +113,7 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
         alt={alt}
         crossOrigin={crossOrigin}
         onLoad={handleImageLoad}
-        style={{ opacity: imageOpacity }}
+        style={{ opacity: canvasReady ? imageOpacity : 0 }}
         className={`absolute inset-0 w-full h-full object-cover select-none bg-black transition-opacity duration-300 pointer-events-none ${imageClassName}`}
         {...restImageProps}
       />
@@ -116,12 +121,13 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
       {imageLoaded && (
         <div
           className={`absolute inset-0 w-full h-full pointer-events-none select-none transition-opacity duration-300 ${canvasClassName}`}
-          style={{ opacity: asciiOpacity }}
+          style={{ opacity: canvasReady ? asciiOpacity : 0 }}
         >
           <AsciiImageCanvas
             imageElement={localImageRef.current}
             settings={settings}
             triggerRender={triggerRender}
+            onFirstRender={handleCanvasReady}
           />
         </div>
       )}

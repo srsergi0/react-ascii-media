@@ -6,6 +6,7 @@ interface AsciiImageCanvasProps {
   settings: AsciiSettings;
   className?: string;
   onDimensionsUpdate?: (width: number, height: number) => void;
+  onFirstRender?: () => void;
   triggerRender?: number;
 }
 
@@ -14,6 +15,7 @@ export const AsciiImageCanvas: React.FC<AsciiImageCanvasProps> = ({
   settings,
   className = '',
   onDimensionsUpdate,
+  onFirstRender,
   triggerRender = 0,
 }) => {
   const displayCanvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -429,6 +431,7 @@ export const AsciiImageCanvas: React.FC<AsciiImageCanvasProps> = ({
         }
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
+        if (onFirstRender) onFirstRender();
       } else {
         const ctx2D = ctx2DRef.current;
         if (ctx2D) {
@@ -544,6 +547,7 @@ export const AsciiImageCanvas: React.FC<AsciiImageCanvasProps> = ({
             }
           }
         }
+        if (onFirstRender) onFirstRender();
       }
     };
 

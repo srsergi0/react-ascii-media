@@ -1,16 +1,16 @@
-import { jsx as f, jsxs as ie, Fragment as Ye } from "react/jsx-runtime";
-import { useRef as i, useEffect as ae, forwardRef as We, useImperativeHandle as Ve, useState as ue } from "react";
+import { jsx as f, jsxs as se, Fragment as Ye } from "react/jsx-runtime";
+import { useRef as l, useEffect as ae, forwardRef as We, useImperativeHandle as Ve, useState as ue } from "react";
 const $e = ({
   videoElement: a,
   videoSrc: d,
-  settings: h,
-  className: fe = "",
-  onDimensionsUpdate: le
+  settings: m,
+  className: he = "",
+  onDimensionsUpdate: te
 }) => {
-  const O = i(null), X = i(null), q = i(null), B = i(null), k = i(null), P = i(null), se = i(null), Z = i(-1), H = i(null), j = i({}), ee = i(-1), M = i(null), K = i(0), G = i(!1), Y = i(!1), de = i(d), ce = i(null), J = i(!0), I = i(8), te = i(6), u = i(null), t = i(null), p = i(null), c = i(/* @__PURE__ */ new Map()), D = i(new Uint8Array(256)), W = i(new Float32Array(256)), N = i(new Float32Array(256)), _ = () => {
-    if (h.customDensity)
-      return h.customDensity.split("");
-    switch (h.densityPreset) {
+  const re = l(null), I = l(null), B = l(null), k = l(null), X = l(null), D = l(null), G = l(null), ce = l(-1), j = l(null), K = l({}), oe = l(-1), W = l(null), M = l(0), J = l(!1), V = l(!1), ie = l(d), le = l(null), Q = l(!0), S = l(8), Z = l(6), F = l(null), x = l(null), t = l(null), y = l(/* @__PURE__ */ new Map()), c = l(new Uint8Array(256)), N = l(new Float32Array(256)), z = l(new Float32Array(256)), P = () => {
+    if (m.customDensity)
+      return m.customDensity.split("");
+    switch (m.densityPreset) {
       case "blocks":
         return [" ", "░", "▒", "▓", "█"];
       case "binary":
@@ -33,14 +33,14 @@ const $e = ({
       default:
         return " .:-=+*#%@".split("");
     }
-  }, b = (r, e) => (u.current ? (u.current.width !== r || u.current.height !== e) && (u.current.width = r, u.current.height = e) : (u.current = document.createElement("canvas"), u.current.width = r, u.current.height = e, t.current = u.current.getContext("2d", {
+  }, h = (r, e) => (F.current ? (F.current.width !== r || F.current.height !== e) && (F.current.width = r, F.current.height = e) : (F.current = document.createElement("canvas"), F.current.width = r, F.current.height = e, x.current = F.current.getContext("2d", {
     willReadFrequently: !1
   })), {
-    canvas: u.current,
-    ctx: t.current
+    canvas: F.current,
+    ctx: x.current
   });
   return ae(() => {
-    const r = O.current;
+    const r = re.current;
     if (!r) return;
     let e = null;
     try {
@@ -55,14 +55,14 @@ const $e = ({
         antialias: !1,
         preserveDrawingBuffer: !0
       });
-    } catch (x) {
-      console.warn("WebGL initialization failed, falling back to 2D Canvas.", x);
+    } catch (R) {
+      console.warn("WebGL initialization failed, falling back to 2D Canvas.", R);
     }
     if (!e) {
-      p.current = r.getContext("2d");
+      t.current = r.getContext("2d");
       return;
     }
-    X.current = e;
+    I.current = e;
     const s = `
       attribute vec2 a_position;
       varying vec2 v_texCoord;
@@ -71,7 +71,7 @@ const $e = ({
         v_texCoord = a_position * 0.5 + 0.5;
         gl_Position = vec4(a_position, 0.0, 1.0);
       }
-    `, g = `
+    `, u = `
       precision highp float;
 
       varying vec2 v_texCoord;
@@ -176,32 +176,32 @@ const $e = ({
 
         gl_FragColor = vec4(finalColor * intensity, intensity);
       }
-    `, E = (x, L) => {
-      const F = e.createShader(L);
-      return F ? (e.shaderSource(F, x), e.compileShader(F), e.getShaderParameter(F, e.COMPILE_STATUS) ? F : (console.error("Shader compilation error:", e.getShaderInfoLog(F)), e.deleteShader(F), null)) : null;
-    }, re = E(s, e.VERTEX_SHADER), o = E(g, e.FRAGMENT_SHADER);
-    if (!re || !o) return;
-    const l = e.createProgram();
-    if (!l) return;
-    if (e.attachShader(l, re), e.attachShader(l, o), e.linkProgram(l), !e.getProgramParameter(l, e.LINK_STATUS)) {
-      console.error("Shader program linking error:", e.getProgramInfoLog(l));
+    `, U = (R, w) => {
+      const L = e.createShader(w);
+      return L ? (e.shaderSource(L, R), e.compileShader(L), e.getShaderParameter(L, e.COMPILE_STATUS) ? L : (console.error("Shader compilation error:", e.getShaderInfoLog(L)), e.deleteShader(L), null)) : null;
+    }, v = U(s, e.VERTEX_SHADER), o = U(u, e.FRAGMENT_SHADER);
+    if (!v || !o) return;
+    const i = e.createProgram();
+    if (!i) return;
+    if (e.attachShader(i, v), e.attachShader(i, o), e.linkProgram(i), !e.getProgramParameter(i, e.LINK_STATUS)) {
+      console.error("Shader program linking error:", e.getProgramInfoLog(i));
       return;
     }
-    q.current = l, j.current = {
-      u_video_texture: e.getUniformLocation(l, "u_video_texture"),
-      u_prev_video_texture: e.getUniformLocation(l, "u_prev_video_texture"),
-      u_atlas_texture: e.getUniformLocation(l, "u_atlas_texture"),
-      u_cols: e.getUniformLocation(l, "u_cols"),
-      u_rows: e.getUniformLocation(l, "u_rows"),
-      u_char_count: e.getUniformLocation(l, "u_char_count"),
-      u_brightness: e.getUniformLocation(l, "u_brightness"),
-      u_contrast: e.getUniformLocation(l, "u_contrast"),
-      u_saturation: e.getUniformLocation(l, "u_saturation"),
-      u_color_mode: e.getUniformLocation(l, "u_color_mode"),
-      u_use_sequence: e.getUniformLocation(l, "u_use_sequence"),
-      u_transition_progress: e.getUniformLocation(l, "u_transition_progress"),
-      u_has_prev_texture: e.getUniformLocation(l, "u_has_prev_texture")
-    }, ee.current = e.getAttribLocation(l, "a_position");
+    B.current = i, K.current = {
+      u_video_texture: e.getUniformLocation(i, "u_video_texture"),
+      u_prev_video_texture: e.getUniformLocation(i, "u_prev_video_texture"),
+      u_atlas_texture: e.getUniformLocation(i, "u_atlas_texture"),
+      u_cols: e.getUniformLocation(i, "u_cols"),
+      u_rows: e.getUniformLocation(i, "u_rows"),
+      u_char_count: e.getUniformLocation(i, "u_char_count"),
+      u_brightness: e.getUniformLocation(i, "u_brightness"),
+      u_contrast: e.getUniformLocation(i, "u_contrast"),
+      u_saturation: e.getUniformLocation(i, "u_saturation"),
+      u_color_mode: e.getUniformLocation(i, "u_color_mode"),
+      u_use_sequence: e.getUniformLocation(i, "u_use_sequence"),
+      u_transition_progress: e.getUniformLocation(i, "u_transition_progress"),
+      u_has_prev_texture: e.getUniformLocation(i, "u_has_prev_texture")
+    }, oe.current = e.getAttribLocation(i, "a_position");
     const n = e.createBuffer();
     e.bindBuffer(e.ARRAY_BUFFER, n), e.bufferData(
       e.ARRAY_BUFFER,
@@ -220,150 +220,150 @@ const $e = ({
         1
       ]),
       e.STATIC_DRAW
-    ), B.current = n;
-    const y = e.createTexture();
-    e.bindTexture(e.TEXTURE_2D, y), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_S, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_T, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MIN_FILTER, e.NEAREST), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MAG_FILTER, e.NEAREST), k.current = y;
-    const m = e.createTexture();
-    e.bindTexture(e.TEXTURE_2D, m), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_S, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_T, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MIN_FILTER, e.NEAREST), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MAG_FILTER, e.NEAREST), P.current = m;
+    ), k.current = n;
+    const E = e.createTexture();
+    e.bindTexture(e.TEXTURE_2D, E), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_S, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_T, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MIN_FILTER, e.NEAREST), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MAG_FILTER, e.NEAREST), X.current = E;
     const T = e.createTexture();
-    return e.bindTexture(e.TEXTURE_2D, T), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_S, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_T, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MIN_FILTER, e.NEAREST), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MAG_FILTER, e.NEAREST), M.current = T, () => {
-      const x = X.current;
-      x && (B.current && x.deleteBuffer(B.current), k.current && x.deleteTexture(k.current), P.current && x.deleteTexture(P.current), M.current && x.deleteTexture(M.current), q.current && x.deleteProgram(q.current)), X.current = null, p.current = null;
+    e.bindTexture(e.TEXTURE_2D, T), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_S, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_T, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MIN_FILTER, e.NEAREST), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MAG_FILTER, e.NEAREST), D.current = T;
+    const p = e.createTexture();
+    return e.bindTexture(e.TEXTURE_2D, p), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_S, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_WRAP_T, e.CLAMP_TO_EDGE), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MIN_FILTER, e.NEAREST), e.texParameteri(e.TEXTURE_2D, e.TEXTURE_MAG_FILTER, e.NEAREST), W.current = p, () => {
+      const R = I.current;
+      R && (k.current && R.deleteBuffer(k.current), X.current && R.deleteTexture(X.current), D.current && R.deleteTexture(D.current), W.current && R.deleteTexture(W.current), B.current && R.deleteProgram(B.current)), I.current = null, t.current = null;
     };
   }, []), ae(() => {
-    ce.current = null, J.current = !0;
-    const r = X.current, e = O.current;
+    le.current = null, Q.current = !0;
+    const r = I.current, e = re.current;
     if (!e) return;
-    const s = h.fontSize * 0.6, g = h.fontSize, E = _();
-    if (r && P.current) {
-      const l = E.length, n = 48, y = Math.ceil(n * 0.6), m = document.createElement("canvas");
-      m.width = l * y, m.height = n;
-      const T = m.getContext("2d");
-      if (T) {
-        T.clearRect(0, 0, m.width, m.height), T.fillStyle = "#FFFFFF", T.textAlign = "center", T.textBaseline = "middle", T.font = `bold ${n}px "Fira Code", "Courier New", Courier, monospace`;
-        for (let x = 0; x < l; x++) {
-          const L = E[x], F = x * y + y / 2, v = n / 2;
-          T.fillText(L, F, v);
+    const s = m.fontSize * 0.6, u = m.fontSize, U = P();
+    if (r && D.current) {
+      const i = U.length, n = 48, E = Math.ceil(n * 0.6), T = document.createElement("canvas");
+      T.width = i * E, T.height = n;
+      const p = T.getContext("2d");
+      if (p) {
+        p.clearRect(0, 0, T.width, T.height), p.fillStyle = "#FFFFFF", p.textAlign = "center", p.textBaseline = "middle", p.font = `bold ${n}px "Fira Code", "Courier New", Courier, monospace`;
+        for (let R = 0; R < i; R++) {
+          const w = U[R], L = R * E + E / 2, b = n / 2;
+          p.fillText(w, L, b);
         }
-        r.activeTexture(r.TEXTURE1), r.bindTexture(r.TEXTURE_2D, P.current), r.pixelStorei(r.UNPACK_FLIP_Y_WEBGL, 0), r.texImage2D(r.TEXTURE_2D, 0, r.RGBA, r.RGBA, r.UNSIGNED_BYTE, m), r.texParameteri(r.TEXTURE_2D, r.TEXTURE_MIN_FILTER, r.LINEAR), r.texParameteri(r.TEXTURE_2D, r.TEXTURE_MAG_FILTER, r.LINEAR);
+        r.activeTexture(r.TEXTURE1), r.bindTexture(r.TEXTURE_2D, D.current), r.pixelStorei(r.UNPACK_FLIP_Y_WEBGL, 0), r.texImage2D(r.TEXTURE_2D, 0, r.RGBA, r.RGBA, r.UNSIGNED_BYTE, T), r.texParameteri(r.TEXTURE_2D, r.TEXTURE_MIN_FILTER, r.LINEAR), r.texParameteri(r.TEXTURE_2D, r.TEXTURE_MAG_FILTER, r.LINEAR);
       }
     }
-    p.current && c.current.clear();
-    const re = () => {
-      const l = e.getBoundingClientRect(), n = Math.min(1.5, window.devicePixelRatio || 1), y = Math.floor(l.width) || (a == null ? void 0 : a.videoWidth) || 640, m = Math.floor(l.height) || (a == null ? void 0 : a.videoHeight) || 360;
-      e.width = y * n, e.height = m * n, I.current = Math.max(8, Math.floor(e.width / s)), te.current = Math.max(6, Math.floor(e.height / g)), r && r.viewport(0, 0, e.width, e.height), le && le(y, m);
+    t.current && y.current.clear();
+    const v = () => {
+      const i = e.getBoundingClientRect(), n = Math.min(1.5, window.devicePixelRatio || 1), E = Math.floor(i.width) || (a == null ? void 0 : a.videoWidth) || 640, T = Math.floor(i.height) || (a == null ? void 0 : a.videoHeight) || 360;
+      e.width = E * n, e.height = T * n, S.current = Math.max(8, Math.floor(e.width / s)), Z.current = Math.max(6, Math.floor(e.height / u)), r && r.viewport(0, 0, e.width, e.height), te && te(E, T);
     };
-    re();
+    v();
     const o = new ResizeObserver(() => {
-      re();
+      v();
     });
-    return o.observe(e), se.current = o, () => {
+    return o.observe(e), G.current = o, () => {
       o.disconnect();
     };
-  }, [a, h]), ae(() => {
-    if (d !== de.current) {
-      const r = X.current;
-      if (r && M.current && a && a.readyState >= 2)
+  }, [a, m]), ae(() => {
+    if (d !== ie.current) {
+      const r = I.current;
+      if (r && W.current && a && a.readyState >= 2)
         try {
-          r.activeTexture(r.TEXTURE2), r.bindTexture(r.TEXTURE_2D, M.current), r.pixelStorei(r.UNPACK_FLIP_Y_WEBGL, 1), r.texImage2D(r.TEXTURE_2D, 0, r.RGBA, r.RGBA, r.UNSIGNED_BYTE, a), Y.current = !0, G.current = !1;
+          r.activeTexture(r.TEXTURE2), r.bindTexture(r.TEXTURE_2D, W.current), r.pixelStorei(r.UNPACK_FLIP_Y_WEBGL, 1), r.texImage2D(r.TEXTURE_2D, 0, r.RGBA, r.RGBA, r.UNSIGNED_BYTE, a), V.current = !0, J.current = !1;
         } catch (e) {
           console.warn("Failed to capture old video frame for transition:", e);
         }
-      de.current = d;
+      ie.current = d;
     }
   }, [d, a]), ae(() => {
     if (!a) return;
     let r = !0, e = null;
-    const s = (o, l, n) => {
-      const y = Math.min(255, o >> 4 << 4), m = Math.min(255, l >> 4 << 4), T = Math.min(255, n >> 4 << 4), x = y >> 4 << 8 | m >> 4 << 4 | T >> 4;
-      let L = c.current.get(x);
-      return L || (L = `rgb(${y},${m},${T})`, c.current.set(x, L)), L;
-    }, g = () => {
+    const s = (o, i, n) => {
+      const E = Math.min(255, o >> 4 << 4), T = Math.min(255, i >> 4 << 4), p = Math.min(255, n >> 4 << 4), R = E >> 4 << 8 | T >> 4 << 4 | p >> 4;
+      let w = y.current.get(R);
+      return w || (w = `rgb(${E},${T},${p})`, y.current.set(R, w)), w;
+    }, u = () => {
       if (!r) return;
-      const o = O.current;
+      const o = re.current;
       if (!o) return;
-      const l = a.currentTime;
-      if (l === Z.current && !a.paused && !G.current && !Y.current)
+      const i = a.currentTime;
+      if (i === ce.current && !a.paused && !J.current && !V.current)
         return;
-      Z.current = l;
-      const n = X.current, y = q.current, m = h.fontSize * 0.6, T = h.fontSize, x = _(), L = I.current, F = te.current;
-      if (n && y && k.current && B.current) {
-        n.viewport(0, 0, o.width, o.height), n.clearColor(0, 0, 0, 0), n.clear(n.COLOR_BUFFER_BIT), n.useProgram(y), a.readyState >= 2 && (n.activeTexture(n.TEXTURE0), n.bindTexture(n.TEXTURE_2D, k.current), n.pixelStorei(n.UNPACK_FLIP_Y_WEBGL, 1), n.texImage2D(n.TEXTURE_2D, 0, n.RGBA, n.RGBA, n.UNSIGNED_BYTE, a));
-        let v = 1, V = 0;
-        if (Y.current)
-          a.readyState >= 2 ? (Y.current = !1, G.current = !0, K.current = performance.now(), v = 0, V = 1) : (v = 0, V = 1);
-        else if (G.current) {
-          const $ = performance.now() - K.current;
-          v = Math.min(1, $ / 800), V = 1, v >= 1 && (G.current = !1, V = 0);
+      ce.current = i;
+      const n = I.current, E = B.current, T = m.fontSize * 0.6, p = m.fontSize, R = P(), w = S.current, L = Z.current;
+      if (n && E && X.current && k.current) {
+        n.viewport(0, 0, o.width, o.height), n.clearColor(0, 0, 0, 0), n.clear(n.COLOR_BUFFER_BIT), n.useProgram(E), a.readyState >= 2 && (n.activeTexture(n.TEXTURE0), n.bindTexture(n.TEXTURE_2D, X.current), n.pixelStorei(n.UNPACK_FLIP_Y_WEBGL, 1), n.texImage2D(n.TEXTURE_2D, 0, n.RGBA, n.RGBA, n.UNSIGNED_BYTE, a));
+        let b = 1, O = 0;
+        if (V.current)
+          a.readyState >= 2 ? (V.current = !1, J.current = !0, M.current = performance.now(), b = 0, O = 1) : (b = 0, O = 1);
+        else if (J.current) {
+          const H = performance.now() - M.current;
+          b = Math.min(1, H / 800), O = 1, b >= 1 && (J.current = !1, O = 0);
         }
-        V === 1 && M.current && (n.activeTexture(n.TEXTURE2), n.bindTexture(n.TEXTURE_2D, M.current)), n.activeTexture(n.TEXTURE1), n.bindTexture(n.TEXTURE_2D, P.current);
-        let w = 0;
-        h.colorMode === "green" ? w = 1 : h.colorMode === "amber" ? w = 2 : h.colorMode === "mono" ? w = 3 : h.colorMode === "cyberpunk" && (w = 4);
-        const R = j.current;
-        n.uniform1i(R.u_video_texture || null, 0), n.uniform1i(R.u_prev_video_texture || null, 2), n.uniform1i(R.u_atlas_texture || null, 1), n.uniform1f(R.u_cols || null, L), n.uniform1f(R.u_rows || null, F), n.uniform1f(R.u_char_count || null, x.length), n.uniform1f(R.u_brightness || null, h.brightness), n.uniform1f(R.u_contrast || null, h.contrast), n.uniform1f(R.u_saturation || null, h.saturation), n.uniform1i(R.u_color_mode || null, w), n.uniform1i(R.u_use_sequence || null, h.customDensity ? 1 : 0), n.uniform1f(R.u_transition_progress || null, v), n.uniform1i(R.u_has_prev_texture || null, V);
-        const oe = ee.current;
-        oe !== -1 && (n.enableVertexAttribArray(oe), n.bindBuffer(n.ARRAY_BUFFER, B.current), n.vertexAttribPointer(oe, 2, n.FLOAT, !1, 0, 0)), n.drawArrays(n.TRIANGLES, 0, 6);
+        O === 1 && W.current && (n.activeTexture(n.TEXTURE2), n.bindTexture(n.TEXTURE_2D, W.current)), n.activeTexture(n.TEXTURE1), n.bindTexture(n.TEXTURE_2D, D.current);
+        let Y = 0;
+        m.colorMode === "green" ? Y = 1 : m.colorMode === "amber" ? Y = 2 : m.colorMode === "mono" ? Y = 3 : m.colorMode === "cyberpunk" && (Y = 4);
+        const g = K.current;
+        n.uniform1i(g.u_video_texture || null, 0), n.uniform1i(g.u_prev_video_texture || null, 2), n.uniform1i(g.u_atlas_texture || null, 1), n.uniform1f(g.u_cols || null, w), n.uniform1f(g.u_rows || null, L), n.uniform1f(g.u_char_count || null, R.length), n.uniform1f(g.u_brightness || null, m.brightness), n.uniform1f(g.u_contrast || null, m.contrast), n.uniform1f(g.u_saturation || null, m.saturation), n.uniform1i(g.u_color_mode || null, Y), n.uniform1i(g.u_use_sequence || null, m.customDensity ? 1 : 0), n.uniform1f(g.u_transition_progress || null, b), n.uniform1i(g.u_has_prev_texture || null, O);
+        const $ = oe.current;
+        $ !== -1 && (n.enableVertexAttribArray($), n.bindBuffer(n.ARRAY_BUFFER, k.current), n.vertexAttribPointer($, 2, n.FLOAT, !1, 0, 0)), n.drawArrays(n.TRIANGLES, 0, 6);
       } else {
-        const v = p.current;
-        if (v) {
-          const V = o.width, w = o.height, { ctx: R } = b(L, F);
-          if (R) {
-            R.drawImage(a, 0, 0, L, F);
-            const $ = R.getImageData(0, 0, L, F).data, Re = L * F * 4, A = ce.current, he = !A || A.length !== Re || J.current || !h.enableDeltaRendering;
-            he && (v.fillStyle = "#010101", v.fillRect(0, 0, V, w), h.enableDeltaRendering && (ce.current = new Uint8Array($)), J.current = !1);
-            const ne = h.brightness, Ee = h.contrast, pe = h.saturation, _e = D.current, me = W.current, xe = N.current;
-            for (let S = 0; S < 256; S++) {
-              let ge = S;
-              ne !== 1 && (ge *= ne), Ee !== 1 && (ge = (ge - 128) * Ee + 128), _e[S] = Math.max(0, Math.min(255, Math.floor(ge))), me[S] = S * pe, xe[S] = S * (1 - pe);
+        const b = t.current;
+        if (b) {
+          const O = o.width, Y = o.height, { ctx: g } = h(w, L);
+          if (g) {
+            g.drawImage(a, 0, 0, w, L);
+            const H = g.getImageData(0, 0, w, L).data, fe = w * L * 4, A = le.current, _e = !A || A.length !== fe || Q.current || !m.enableDeltaRendering;
+            _e && (b.fillStyle = "#010101", b.fillRect(0, 0, O, Y), m.enableDeltaRendering && (le.current = new Uint8Array(H)), Q.current = !1);
+            const be = m.brightness, ne = m.contrast, Ee = m.saturation, me = c.current, xe = N.current, ge = z.current;
+            for (let _ = 0; _ < 256; _++) {
+              let Te = _;
+              be !== 1 && (Te *= be), ne !== 1 && (Te = (Te - 128) * ne + 128), me[_] = Math.max(0, Math.min(255, Math.floor(Te))), xe[_] = _ * Ee, ge[_] = _ * (1 - Ee);
             }
-            let be = `bold ${h.fontSize}px "JetBrains Mono", "Fira Code", Courier, monospace`;
-            v.font = be, v.textAlign = "center", v.textBaseline = "middle";
-            let Ce = "";
-            const we = x.length, z = h.colorMode, C = !!h.customDensity;
-            for (let S = 0; S < F; S++) {
-              const ge = S * T + T / 2;
-              for (let ve = 0; ve < L; ve++) {
-                const Q = (S * L + ve) * 4, Me = $[Q], Ue = $[Q + 1], Le = $[Q + 2];
-                if (!he && h.enableDeltaRendering && A) {
-                  const U = A[Q], Xe = A[Q + 1], Ne = A[Q + 2];
-                  if (Math.abs(Me - U) + Math.abs(Ue - Xe) + Math.abs(Le - Ne) < h.pdhThreshold)
+            let ye = `bold ${m.fontSize}px "JetBrains Mono", "Fira Code", Courier, monospace`;
+            b.font = ye, b.textAlign = "center", b.textBaseline = "middle";
+            let de = "";
+            const Ce = R.length, ve = m.colorMode, ee = !!m.customDensity;
+            for (let _ = 0; _ < L; _++) {
+              const Te = _ * p + p / 2;
+              for (let Re = 0; Re < w; Re++) {
+                const q = (_ * w + Re) * 4, Me = H[q], Ue = H[q + 1], Le = H[q + 2];
+                if (!_e && m.enableDeltaRendering && A) {
+                  const C = A[q], Xe = A[q + 1], Ne = A[q + 2];
+                  if (Math.abs(Me - C) + Math.abs(Ue - Xe) + Math.abs(Le - Ne) < m.pdhThreshold)
                     continue;
                 }
-                he || (v.fillStyle = "#010101", v.fillRect(ve * m - 0.2, S * T - 0.2, m + 0.4, T + 0.4), Ce = "#010101");
-                const Fe = _e[Me], Ae = _e[Ue], De = _e[Le];
-                let Se = Fe, Pe = Ae, Ie = De;
-                if (pe !== 1) {
-                  const U = Fe * 77 + Ae * 150 + De * 29 >> 8;
-                  Se = Math.max(0, Math.min(255, Math.floor(me[Fe] + xe[U]))), Pe = Math.max(0, Math.min(255, Math.floor(me[Ae] + xe[U]))), Ie = Math.max(0, Math.min(255, Math.floor(me[De] + xe[U])));
+                _e || (b.fillStyle = "#010101", b.fillRect(Re * T - 0.2, _ * p - 0.2, T + 0.4, p + 0.4), de = "#010101");
+                const Ae = me[Me], Fe = me[Ue], De = me[Le];
+                let Se = Ae, Pe = Fe, Ie = De;
+                if (Ee !== 1) {
+                  const C = Ae * 77 + Fe * 150 + De * 29 >> 8;
+                  Se = Math.max(0, Math.min(255, Math.floor(xe[Ae] + ge[C]))), Pe = Math.max(0, Math.min(255, Math.floor(xe[Fe] + ge[C]))), Ie = Math.max(0, Math.min(255, Math.floor(xe[De] + ge[C])));
                 }
-                const ye = Se * 77 + Pe * 150 + Ie * 29 >> 8, ze = C ? (S * L + ve) % we : ye * we >> 8, Be = x[ze] || x[we - 1];
+                const we = Se * 77 + Pe * 150 + Ie * 29 >> 8, ze = ee ? (_ * w + Re) % Ce : we * Ce >> 8, Be = R[ze] || R[Ce - 1];
                 if (Be === " ") {
-                  h.enableDeltaRendering && A && (A[Q] = Me, A[Q + 1] = Ue, A[Q + 2] = Le);
+                  m.enableDeltaRendering && A && (A[q] = Me, A[q + 1] = Ue, A[q + 2] = Le);
                   continue;
                 }
-                C ? v.globalAlpha = ye / 255 : v.globalAlpha = 1;
-                let Te = "#FFFFFF";
-                if (z === "rgb")
-                  Te = s(Se, Pe, Ie);
-                else if (z === "green") {
-                  const U = Math.max(0, Math.min(255, 50 + (ye * 205 >> 8)));
-                  Te = s(0, U, 30);
-                } else if (z === "amber") {
-                  const U = Math.max(0, Math.min(255, ye));
-                  Te = s(U, Math.max(0, Math.min(255, U * 166 >> 8)), 0);
-                } else if (z === "mono") {
-                  const U = Math.max(0, Math.min(255, ye));
-                  Te = s(U, U, U);
-                } else if (z === "cyberpunk") {
-                  const U = ye / 255 * 0.6 + S / F * 0.4, Xe = Math.max(0, Math.min(255, Math.floor(0 * (1 - U) + 255 * U))), Ne = Math.max(0, Math.min(255, Math.floor(240 * (1 - U) + 10 * U))), ke = Math.max(0, Math.min(255, Math.floor(255 * (1 - U) + 160 * U)));
-                  Te = s(Xe, Ne, ke);
+                ee ? b.globalAlpha = we / 255 : b.globalAlpha = 1;
+                let pe = "#FFFFFF";
+                if (ve === "rgb")
+                  pe = s(Se, Pe, Ie);
+                else if (ve === "green") {
+                  const C = Math.max(0, Math.min(255, 50 + (we * 205 >> 8)));
+                  pe = s(0, C, 30);
+                } else if (ve === "amber") {
+                  const C = Math.max(0, Math.min(255, we));
+                  pe = s(C, Math.max(0, Math.min(255, C * 166 >> 8)), 0);
+                } else if (ve === "mono") {
+                  const C = Math.max(0, Math.min(255, we));
+                  pe = s(C, C, C);
+                } else if (ve === "cyberpunk") {
+                  const C = we / 255 * 0.6 + _ / L * 0.4, Xe = Math.max(0, Math.min(255, Math.floor(0 * (1 - C) + 255 * C))), Ne = Math.max(0, Math.min(255, Math.floor(240 * (1 - C) + 10 * C))), ke = Math.max(0, Math.min(255, Math.floor(255 * (1 - C) + 160 * C)));
+                  pe = s(Xe, Ne, ke);
                 }
-                Te !== Ce && (v.fillStyle = Te, Ce = Te);
-                const Oe = ve * m + m / 2, qe = ge;
-                v.fillText(Be, Oe, qe), h.enableDeltaRendering && A && (A[Q] = Me, A[Q + 1] = Ue, A[Q + 2] = Le);
+                pe !== de && (b.fillStyle = pe, de = pe);
+                const Oe = Re * T + T / 2, qe = Te;
+                b.fillText(Be, Oe, qe), m.enableDeltaRendering && A && (A[q] = Me, A[q + 1] = Ue, A[q + 2] = Le);
               }
             }
-            C && (v.globalAlpha = 1);
+            ee && (b.globalAlpha = 1);
           }
         }
       }
@@ -371,42 +371,42 @@ const $e = ({
     (() => {
       if ("requestVideoFrameCallback" in a) {
         const o = () => {
-          g(), r && (e = a.requestVideoFrameCallback(o));
+          u(), r && (e = a.requestVideoFrameCallback(o));
         };
         e = a.requestVideoFrameCallback(o);
       } else {
         const o = () => {
-          g(), r && (H.current = requestAnimationFrame(o));
+          u(), r && (j.current = requestAnimationFrame(o));
         };
-        H.current = requestAnimationFrame(o);
+        j.current = requestAnimationFrame(o);
       }
-    })(), g();
-    const re = () => {
-      g();
+    })(), u();
+    const v = () => {
+      u();
     };
-    return a.addEventListener("seeked", re), () => {
-      r = !1, a.removeEventListener("seeked", re), e !== null && "cancelVideoFrameCallback" in a && a.cancelVideoFrameCallback(e), H.current !== null && cancelAnimationFrame(H.current);
+    return a.addEventListener("seeked", v), () => {
+      r = !1, a.removeEventListener("seeked", v), e !== null && "cancelVideoFrameCallback" in a && a.cancelVideoFrameCallback(e), j.current !== null && cancelAnimationFrame(j.current);
     };
-  }, [a, h]), /* @__PURE__ */ f(
+  }, [a, m]), /* @__PURE__ */ f(
     "canvas",
     {
       id: "ascii-display-canvas",
-      ref: O,
-      className: `absolute inset-0 w-full h-full pointer-events-none select-none bg-transparent ${fe}`
+      ref: re,
+      className: `absolute inset-0 w-full h-full pointer-events-none select-none bg-transparent ${he}`
     }
   );
-}, Ge = ({ className: a = "w-4 h-4", fill: d = "none" }) => /* @__PURE__ */ f("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: d, stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: a, children: /* @__PURE__ */ f("polygon", { points: "6 3 20 12 6 21 6 3" }) }), He = ({ className: a = "w-4 h-4", fill: d = "none" }) => /* @__PURE__ */ ie("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: d, stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: a, children: [
+}, Ge = ({ className: a = "w-4 h-4", fill: d = "none" }) => /* @__PURE__ */ f("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: d, stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: a, children: /* @__PURE__ */ f("polygon", { points: "6 3 20 12 6 21 6 3" }) }), He = ({ className: a = "w-4 h-4", fill: d = "none" }) => /* @__PURE__ */ se("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: d, stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: a, children: [
   /* @__PURE__ */ f("rect", { x: "14", y: "4", width: "4", height: "16", rx: "1" }),
   /* @__PURE__ */ f("rect", { x: "6", y: "4", width: "4", height: "16", rx: "1" })
-] }), je = ({ className: a = "w-4 h-4" }) => /* @__PURE__ */ ie("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: a, children: [
+] }), je = ({ className: a = "w-4 h-4" }) => /* @__PURE__ */ se("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: a, children: [
   /* @__PURE__ */ f("polygon", { points: "11 5 6 9 2 9 2 15 6 15 11 19 11 5" }),
   /* @__PURE__ */ f("path", { d: "M15.54 8.46a5 5 0 0 1 0 7.07" }),
   /* @__PURE__ */ f("path", { d: "M19.07 4.93a10 10 0 0 1 0 14.14" })
-] }), Ke = ({ className: a = "w-4 h-4" }) => /* @__PURE__ */ ie("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: a, children: [
+] }), Ke = ({ className: a = "w-4 h-4" }) => /* @__PURE__ */ se("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: a, children: [
   /* @__PURE__ */ f("polygon", { points: "11 5 6 9 2 9 2 15 6 15 11 19 11 5" }),
   /* @__PURE__ */ f("line", { x1: "22", y1: "9", x2: "16", y2: "15" }),
   /* @__PURE__ */ f("line", { x1: "16", y1: "9", x2: "22", y2: "15" })
-] }), Je = ({ className: a = "w-4 h-4" }) => /* @__PURE__ */ ie("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: a, children: [
+] }), Je = ({ className: a = "w-4 h-4" }) => /* @__PURE__ */ se("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: a, children: [
   /* @__PURE__ */ f("polyline", { points: "15 3 21 3 21 9" }),
   /* @__PURE__ */ f("polyline", { points: "9 21 3 21 3 15" }),
   /* @__PURE__ */ f("line", { x1: "21", y1: "3", x2: "14", y2: "10" }),
@@ -414,123 +414,123 @@ const $e = ({
 ] }), Qe = We(({
   fontSize: a = 7,
   colorMode: d = "rgb",
-  densityPreset: h = "standard",
-  customDensity: fe = "",
-  brightness: le = 1.15,
-  contrast: O = 1.1,
-  saturation: X = 1.25,
-  pdhThreshold: q = 18,
-  className: B = "",
-  videoClassName: k = "",
-  canvasClassName: P = "",
-  asciiOpacity: se = 1,
-  videoOpacity: Z = 0,
-  customControls: H = !1,
-  src: j,
-  autoPlay: ee,
-  loop: M,
-  muted: K,
-  playsInline: G = !0,
-  crossOrigin: Y = "anonymous",
-  style: de,
-  ...ce
-}, J) => {
-  const I = i(null), te = i(null);
-  Ve(J, () => I.current);
-  const u = {
+  densityPreset: m = "standard",
+  customDensity: he = "",
+  brightness: te = 1.15,
+  contrast: re = 1.1,
+  saturation: I = 1.25,
+  pdhThreshold: B = 18,
+  className: k = "",
+  videoClassName: X = "",
+  canvasClassName: D = "",
+  asciiOpacity: G = 1,
+  videoOpacity: ce = 0,
+  customControls: j = !1,
+  src: K,
+  autoPlay: oe,
+  loop: W,
+  muted: M,
+  playsInline: J = !0,
+  crossOrigin: V = "anonymous",
+  style: ie,
+  ...le
+}, Q) => {
+  const S = l(null), Z = l(null);
+  Ve(Q, () => S.current);
+  const F = {
     fontSize: a,
     colorMode: d,
-    densityPreset: h,
-    customDensity: fe,
-    brightness: le,
-    contrast: O,
-    saturation: X,
+    densityPreset: m,
+    customDensity: he,
+    brightness: te,
+    contrast: re,
+    saturation: I,
     enableDeltaRendering: !0,
-    pdhThreshold: q,
-    asciiOpacity: se,
-    videoOpacity: Z
-  }, [t, p] = ue(!1), [c, D] = ue(!!K), [W, N] = ue(0), [_, b] = ue(16 / 9), [r, e] = ue(!1);
+    pdhThreshold: B,
+    asciiOpacity: G,
+    videoOpacity: ce
+  }, [x, t] = ue(!1), [y, c] = ue(!!M), [N, z] = ue(0), [P, h] = ue(16 / 9), [r, e] = ue(!1);
   ae(() => {
-    const o = I.current;
+    const o = S.current;
     if (!o) return;
-    const l = () => p(!0), n = () => p(!1), y = () => D(o.muted), m = () => {
-      o.duration && N(o.currentTime / o.duration * 100);
-    }, T = () => {
-      o.videoWidth && o.videoHeight && b(o.videoWidth / o.videoHeight);
+    const i = () => t(!0), n = () => t(!1), E = () => c(o.muted), T = () => {
+      o.duration && z(o.currentTime / o.duration * 100);
+    }, p = () => {
+      o.videoWidth && o.videoHeight && h(o.videoWidth / o.videoHeight);
     };
-    return o.addEventListener("play", l), o.addEventListener("pause", n), o.addEventListener("volumechange", y), o.addEventListener("timeupdate", m), o.addEventListener("loadedmetadata", T), p(!o.paused), D(o.muted), () => {
-      o.removeEventListener("play", l), o.removeEventListener("pause", n), o.removeEventListener("volumechange", y), o.removeEventListener("timeupdate", m), o.removeEventListener("loadedmetadata", T);
+    return o.addEventListener("play", i), o.addEventListener("pause", n), o.addEventListener("volumechange", E), o.addEventListener("timeupdate", T), o.addEventListener("loadedmetadata", p), t(!o.paused), c(o.muted), () => {
+      o.removeEventListener("play", i), o.removeEventListener("pause", n), o.removeEventListener("volumechange", E), o.removeEventListener("timeupdate", T), o.removeEventListener("loadedmetadata", p);
     };
   }, []), ae(() => {
-    const o = I.current;
-    o && j && (o.src = j, o.load(), ee && o.play().catch(() => {
+    const o = S.current;
+    o && K && (o.src = K, o.load(), oe && o.play().catch(() => {
     }));
-  }, [j, ee]), ae(() => {
-    const o = I.current;
-    o && (o.muted = !!K, D(!!K));
-  }, [K]);
+  }, [K, oe]), ae(() => {
+    const o = S.current;
+    o && (o.muted = !!M, c(!!M));
+  }, [M]);
   const s = () => {
-    const o = I.current;
+    const o = S.current;
     o && (o.paused ? o.play().catch(() => {
     }) : o.pause());
-  }, g = (o) => {
+  }, u = (o) => {
     o.stopPropagation();
-    const l = I.current;
-    l && (l.muted = !l.muted, D(l.muted));
-  }, E = (o) => {
+    const i = S.current;
+    i && (i.muted = !i.muted, c(i.muted));
+  }, U = (o) => {
     o.stopPropagation();
-    const l = I.current;
-    if (!l || !l.duration) return;
-    const n = o.currentTarget.getBoundingClientRect(), m = (o.clientX - n.left) / n.width;
-    l.currentTime = m * l.duration;
-  }, re = (o) => {
-    o.stopPropagation(), te.current && (document.fullscreenElement ? document.exitFullscreen().catch(() => {
-    }) : te.current.requestFullscreen().catch(() => {
+    const i = S.current;
+    if (!i || !i.duration) return;
+    const n = o.currentTarget.getBoundingClientRect(), T = (o.clientX - n.left) / n.width;
+    i.currentTime = T * i.duration;
+  }, v = (o) => {
+    o.stopPropagation(), Z.current && (document.fullscreenElement ? document.exitFullscreen().catch(() => {
+    }) : Z.current.requestFullscreen().catch(() => {
     }));
   };
-  return /* @__PURE__ */ ie(
+  return /* @__PURE__ */ se(
     "div",
     {
-      ref: te,
+      ref: Z,
       onMouseEnter: () => e(!0),
       onMouseLeave: () => e(!1),
-      className: `relative rounded-xl overflow-hidden bg-[#050505] border border-white/10 group select-none transition-all duration-300 flex items-center justify-center ${B}`,
+      className: `relative rounded-xl overflow-hidden bg-[#050505] border border-white/10 group select-none transition-all duration-300 flex items-center justify-center ${k}`,
       style: {
-        aspectRatio: `${_}`,
+        aspectRatio: `${P}`,
         width: "100%",
-        ...de
+        ...ie
       },
       children: [
         /* @__PURE__ */ f(
           "video",
           {
-            ref: I,
-            crossOrigin: Y,
-            playsInline: G,
-            loop: M,
-            autoPlay: ee,
-            muted: c,
-            style: { opacity: Z },
-            className: `absolute inset-0 w-full h-full object-cover select-none bg-black transition-opacity duration-300 pointer-events-none ${k}`,
-            ...ce
+            ref: S,
+            crossOrigin: V,
+            playsInline: J,
+            loop: W,
+            autoPlay: oe,
+            muted: y,
+            style: { opacity: ce },
+            className: `absolute inset-0 w-full h-full object-cover select-none bg-black transition-opacity duration-300 pointer-events-none ${X}`,
+            ...le
           }
         ),
         /* @__PURE__ */ f(
           "div",
           {
-            className: `absolute inset-0 w-full h-full pointer-events-none select-none transition-opacity duration-300 ${P}`,
-            style: { opacity: se },
+            className: `absolute inset-0 w-full h-full pointer-events-none select-none transition-opacity duration-300 ${D}`,
+            style: { opacity: G },
             children: /* @__PURE__ */ f(
               $e,
               {
-                videoElement: I.current,
-                videoSrc: j,
-                settings: u
+                videoElement: S.current,
+                videoSrc: K,
+                settings: F
               }
             )
           }
         ),
-        H ? /* @__PURE__ */ ie(Ye, { children: [
+        j ? /* @__PURE__ */ se(Ye, { children: [
           /* @__PURE__ */ f(
             "div",
             {
@@ -538,7 +538,7 @@ const $e = ({
               className: "absolute inset-0 z-10 cursor-pointer flex items-center justify-center bg-black/0 active:bg-black/10 transition-colors"
             }
           ),
-          !t && /* @__PURE__ */ f(
+          !x && /* @__PURE__ */ f(
             "div",
             {
               onClick: s,
@@ -547,43 +547,43 @@ const $e = ({
               children: /* @__PURE__ */ f(Ge, { className: "w-5 h-5 stroke-none translate-x-[2px]", fill: "currentColor" })
             }
           ),
-          /* @__PURE__ */ ie(
+          /* @__PURE__ */ se(
             "div",
             {
-              className: `absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 flex flex-col gap-3 transition-opacity duration-300 z-20 ${r || !t ? "opacity-100" : "opacity-0 pointer-events-none"}`,
+              className: `absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 flex flex-col gap-3 transition-opacity duration-300 z-20 ${r || !x ? "opacity-100" : "opacity-0 pointer-events-none"}`,
               children: [
                 /* @__PURE__ */ f(
                   "div",
                   {
-                    onClick: E,
+                    onClick: U,
                     className: "w-full h-1.5 bg-white/10 rounded-full overflow-hidden cursor-pointer relative group/progress transition-all hover:h-2",
                     children: /* @__PURE__ */ f(
                       "div",
                       {
                         className: "absolute top-0 left-0 bottom-0 rounded-full shadow-[0_0_8px_rgba(0,255,148,0.6)]",
-                        style: { width: `${W}%`, backgroundColor: "#00FF94" }
+                        style: { width: `${N}%`, backgroundColor: "#00FF94" }
                       }
                     )
                   }
                 ),
-                /* @__PURE__ */ ie("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ ie("div", { className: "flex items-center gap-3", children: [
+                /* @__PURE__ */ se("div", { className: "flex items-center justify-between", children: [
+                  /* @__PURE__ */ se("div", { className: "flex items-center gap-3", children: [
                     /* @__PURE__ */ f(
                       "button",
                       {
                         type: "button",
                         onClick: s,
                         className: "p-1.5 rounded-md hover:bg-white/10 text-white transition-colors",
-                        children: t ? /* @__PURE__ */ f(He, { className: "w-4 h-4 fill-white", fill: "currentColor" }) : /* @__PURE__ */ f(Ge, { className: "w-4 h-4 stroke-none", fill: "#00FF94" })
+                        children: x ? /* @__PURE__ */ f(He, { className: "w-4 h-4 fill-white", fill: "currentColor" }) : /* @__PURE__ */ f(Ge, { className: "w-4 h-4 stroke-none", fill: "#00FF94" })
                       }
                     ),
                     /* @__PURE__ */ f(
                       "button",
                       {
                         type: "button",
-                        onClick: g,
+                        onClick: u,
                         className: "p-1.5 rounded-md hover:bg-white/10 text-white transition-colors",
-                        children: c ? /* @__PURE__ */ f(Ke, { className: "w-4 h-4" }) : /* @__PURE__ */ f(je, { className: "w-4 h-4" })
+                        children: y ? /* @__PURE__ */ f(Ke, { className: "w-4 h-4" }) : /* @__PURE__ */ f(je, { className: "w-4 h-4" })
                       }
                     )
                   ] }),
@@ -591,7 +591,7 @@ const $e = ({
                     "button",
                     {
                       type: "button",
-                      onClick: re,
+                      onClick: v,
                       className: "p-1.5 rounded-md hover:bg-white/10 text-white transition-colors",
                       children: /* @__PURE__ */ f(Je, { className: "w-4 h-4" })
                     }
@@ -600,7 +600,7 @@ const $e = ({
               ]
             }
           )
-        ] }) : !H && ce.controls && /* @__PURE__ */ f("div", { className: "absolute bottom-2 right-2 z-20 bg-black/60 px-2 py-1 rounded border border-white/10 text-[9px] font-mono text-white/60", children: "*Use customControls prop for styled overlay controls" })
+        ] }) : !j && le.controls && /* @__PURE__ */ f("div", { className: "absolute bottom-2 right-2 z-20 bg-black/60 px-2 py-1 rounded border border-white/10 text-[9px] font-mono text-white/60", children: "*Use customControls prop for styled overlay controls" })
       ]
     }
   );
@@ -609,11 +609,12 @@ Qe.displayName = "CodeVideo";
 const Ze = ({
   imageElement: a,
   settings: d,
-  className: h = "",
-  onDimensionsUpdate: fe,
-  triggerRender: le = 0
+  className: m = "",
+  onDimensionsUpdate: he,
+  onFirstRender: te,
+  triggerRender: re = 0
 }) => {
-  const O = i(null), X = i(null), q = i(null), B = i(null), k = i(null), P = i(null), se = i(null), Z = i({}), H = i(-1), j = i(8), ee = i(6), M = i(null), K = i(null), G = i(null), Y = i(/* @__PURE__ */ new Map()), de = i(new Uint8Array(256)), ce = i(new Float32Array(256)), J = i(new Float32Array(256)), I = () => {
+  const I = l(null), B = l(null), k = l(null), X = l(null), D = l(null), G = l(null), ce = l(null), j = l({}), K = l(-1), oe = l(8), W = l(6), M = l(null), J = l(null), V = l(null), ie = l(/* @__PURE__ */ new Map()), le = l(new Uint8Array(256)), Q = l(new Float32Array(256)), S = l(new Float32Array(256)), Z = () => {
     if (d.customDensity)
       return d.customDensity.split("");
     switch (d.densityPreset) {
@@ -639,37 +640,37 @@ const Ze = ({
       default:
         return " .:-=+*#%@".split("");
     }
-  }, te = (u, t) => (M.current ? (M.current.width !== u || M.current.height !== t) && (M.current.width = u, M.current.height = t) : (M.current = document.createElement("canvas"), M.current.width = u, M.current.height = t, K.current = M.current.getContext("2d", {
+  }, F = (x, t) => (M.current ? (M.current.width !== x || M.current.height !== t) && (M.current.width = x, M.current.height = t) : (M.current = document.createElement("canvas"), M.current.width = x, M.current.height = t, J.current = M.current.getContext("2d", {
     willReadFrequently: !1
   })), {
     canvas: M.current,
-    ctx: K.current
+    ctx: J.current
   });
   return ae(() => {
-    const u = O.current;
-    if (!u) return;
+    const x = I.current;
+    if (!x) return;
     let t = null;
     try {
-      t = u.getContext("webgl", {
+      t = x.getContext("webgl", {
         alpha: !1,
         depth: !1,
         antialias: !1,
         preserveDrawingBuffer: !0
-      }) || u.getContext("experimental-webgl", {
+      }) || x.getContext("experimental-webgl", {
         alpha: !1,
         depth: !1,
         antialias: !1,
         preserveDrawingBuffer: !0
       });
-    } catch (s) {
-      console.warn("WebGL initialization failed, falling back to 2D Canvas.", s);
+    } catch (u) {
+      console.warn("WebGL initialization failed, falling back to 2D Canvas.", u);
     }
     if (!t) {
-      G.current = u.getContext("2d");
+      V.current = x.getContext("2d");
       return;
     }
-    X.current = t;
-    const p = `
+    B.current = t;
+    const y = `
       attribute vec2 a_position;
       varying vec2 v_texCoord;
 
@@ -754,31 +755,31 @@ const Ze = ({
         vec3 bg = vec3(0.0196, 0.0196, 0.0196);
         gl_FragColor = vec4(mix(bg, finalColor, intensity), 1.0);
       }
-    `, D = (s, g) => {
-      const E = t.createShader(g);
-      return E ? (t.shaderSource(E, s), t.compileShader(E), t.getShaderParameter(E, t.COMPILE_STATUS) ? E : (console.error("Shader compilation error:", t.getShaderInfoLog(E)), t.deleteShader(E), null)) : null;
-    }, W = D(p, t.VERTEX_SHADER), N = D(c, t.FRAGMENT_SHADER);
-    if (!W || !N) return;
-    const _ = t.createProgram();
-    if (!_) return;
-    if (t.attachShader(_, W), t.attachShader(_, N), t.linkProgram(_), !t.getProgramParameter(_, t.LINK_STATUS)) {
-      console.error("Shader program linking error:", t.getProgramInfoLog(_));
+    `, N = (u, U) => {
+      const v = t.createShader(U);
+      return v ? (t.shaderSource(v, u), t.compileShader(v), t.getShaderParameter(v, t.COMPILE_STATUS) ? v : (console.error("Shader compilation error:", t.getShaderInfoLog(v)), t.deleteShader(v), null)) : null;
+    }, z = N(y, t.VERTEX_SHADER), P = N(c, t.FRAGMENT_SHADER);
+    if (!z || !P) return;
+    const h = t.createProgram();
+    if (!h) return;
+    if (t.attachShader(h, z), t.attachShader(h, P), t.linkProgram(h), !t.getProgramParameter(h, t.LINK_STATUS)) {
+      console.error("Shader program linking error:", t.getProgramInfoLog(h));
       return;
     }
-    q.current = _, Z.current = {
-      u_video_texture: t.getUniformLocation(_, "u_video_texture"),
-      u_atlas_texture: t.getUniformLocation(_, "u_atlas_texture"),
-      u_cols: t.getUniformLocation(_, "u_cols"),
-      u_rows: t.getUniformLocation(_, "u_rows"),
-      u_char_count: t.getUniformLocation(_, "u_char_count"),
-      u_brightness: t.getUniformLocation(_, "u_brightness"),
-      u_contrast: t.getUniformLocation(_, "u_contrast"),
-      u_saturation: t.getUniformLocation(_, "u_saturation"),
-      u_color_mode: t.getUniformLocation(_, "u_color_mode"),
-      u_use_sequence: t.getUniformLocation(_, "u_use_sequence")
-    }, H.current = t.getAttribLocation(_, "a_position");
-    const b = t.createBuffer();
-    t.bindBuffer(t.ARRAY_BUFFER, b), t.bufferData(
+    k.current = h, j.current = {
+      u_video_texture: t.getUniformLocation(h, "u_video_texture"),
+      u_atlas_texture: t.getUniformLocation(h, "u_atlas_texture"),
+      u_cols: t.getUniformLocation(h, "u_cols"),
+      u_rows: t.getUniformLocation(h, "u_rows"),
+      u_char_count: t.getUniformLocation(h, "u_char_count"),
+      u_brightness: t.getUniformLocation(h, "u_brightness"),
+      u_contrast: t.getUniformLocation(h, "u_contrast"),
+      u_saturation: t.getUniformLocation(h, "u_saturation"),
+      u_color_mode: t.getUniformLocation(h, "u_color_mode"),
+      u_use_sequence: t.getUniformLocation(h, "u_use_sequence")
+    }, K.current = t.getAttribLocation(h, "a_position");
+    const r = t.createBuffer();
+    t.bindBuffer(t.ARRAY_BUFFER, r), t.bufferData(
       t.ARRAY_BUFFER,
       new Float32Array([
         -1,
@@ -795,204 +796,208 @@ const Ze = ({
         1
       ]),
       t.STATIC_DRAW
-    ), B.current = b;
-    const r = t.createTexture();
-    t.bindTexture(t.TEXTURE_2D, r), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_S, t.CLAMP_TO_EDGE), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_T, t.CLAMP_TO_EDGE), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MIN_FILTER, t.NEAREST), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MAG_FILTER, t.NEAREST), k.current = r;
+    ), X.current = r;
     const e = t.createTexture();
-    return t.bindTexture(t.TEXTURE_2D, e), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_S, t.CLAMP_TO_EDGE), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_T, t.CLAMP_TO_EDGE), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MIN_FILTER, t.NEAREST), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MAG_FILTER, t.NEAREST), P.current = e, () => {
-      const s = X.current;
-      s && (B.current && s.deleteBuffer(B.current), k.current && s.deleteTexture(k.current), P.current && s.deleteTexture(P.current), q.current && s.deleteProgram(q.current)), X.current = null, G.current = null;
+    t.bindTexture(t.TEXTURE_2D, e), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_S, t.CLAMP_TO_EDGE), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_T, t.CLAMP_TO_EDGE), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MIN_FILTER, t.NEAREST), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MAG_FILTER, t.NEAREST), D.current = e;
+    const s = t.createTexture();
+    return t.bindTexture(t.TEXTURE_2D, s), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_S, t.CLAMP_TO_EDGE), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_T, t.CLAMP_TO_EDGE), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MIN_FILTER, t.NEAREST), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MAG_FILTER, t.NEAREST), G.current = s, () => {
+      const u = B.current;
+      u && (X.current && u.deleteBuffer(X.current), D.current && u.deleteTexture(D.current), G.current && u.deleteTexture(G.current), k.current && u.deleteProgram(k.current)), B.current = null, V.current = null;
     };
   }, []), ae(() => {
-    const u = X.current, t = O.current;
+    const x = B.current, t = I.current;
     if (!t) return;
-    const p = d.fontSize * 0.6, c = d.fontSize, D = I();
-    if (u && P.current) {
-      const _ = D.length, b = document.createElement("canvas");
-      b.width = Math.ceil(_ * p), b.height = Math.ceil(c);
-      const r = b.getContext("2d");
-      if (r) {
-        r.clearRect(0, 0, b.width, b.height), r.fillStyle = "#FFFFFF", r.font = `bold ${d.fontSize}px "JetBrains Mono", "Fira Code", Courier, monospace`, r.textAlign = "center", r.textBaseline = "middle";
-        for (let e = 0; e < _; e++) {
-          const s = D[e], g = e * p + p / 2, E = c / 2;
-          r.fillText(s, g, E);
+    const y = d.fontSize * 0.6, c = d.fontSize, N = Z();
+    if (x && G.current) {
+      const h = N.length, r = document.createElement("canvas");
+      r.width = Math.ceil(h * y), r.height = Math.ceil(c);
+      const e = r.getContext("2d");
+      if (e) {
+        e.clearRect(0, 0, r.width, r.height), e.fillStyle = "#FFFFFF", e.font = `bold ${d.fontSize}px "JetBrains Mono", "Fira Code", Courier, monospace`, e.textAlign = "center", e.textBaseline = "middle";
+        for (let s = 0; s < h; s++) {
+          const u = N[s], U = s * y + y / 2, v = c / 2;
+          e.fillText(u, U, v);
         }
-        u.activeTexture(u.TEXTURE1), u.bindTexture(u.TEXTURE_2D, P.current), u.pixelStorei(u.UNPACK_FLIP_Y_WEBGL, 0), u.texImage2D(u.TEXTURE_2D, 0, u.RGBA, u.RGBA, u.UNSIGNED_BYTE, b);
+        x.activeTexture(x.TEXTURE1), x.bindTexture(x.TEXTURE_2D, G.current), x.pixelStorei(x.UNPACK_FLIP_Y_WEBGL, 0), x.texImage2D(x.TEXTURE_2D, 0, x.RGBA, x.RGBA, x.UNSIGNED_BYTE, r);
       }
     }
-    G.current && Y.current.clear();
-    const W = () => {
-      const _ = t.getBoundingClientRect(), b = Math.min(1.5, window.devicePixelRatio || 1), r = Math.floor(_.width) || (a == null ? void 0 : a.naturalWidth) || 640, e = Math.floor(_.height) || (a == null ? void 0 : a.naturalHeight) || 360;
-      t.width = r * b, t.height = e * b, j.current = Math.max(8, Math.floor(t.width / p)), ee.current = Math.max(6, Math.floor(t.height / c)), u && u.viewport(0, 0, t.width, t.height), fe && fe(r, e);
+    V.current && ie.current.clear();
+    const z = () => {
+      const h = t.getBoundingClientRect(), r = Math.min(1.5, window.devicePixelRatio || 1), e = Math.floor(h.width) || (a == null ? void 0 : a.naturalWidth) || 640, s = Math.floor(h.height) || (a == null ? void 0 : a.naturalHeight) || 360;
+      t.width = e * r, t.height = s * r, oe.current = Math.max(8, Math.floor(t.width / y)), W.current = Math.max(6, Math.floor(t.height / c)), x && x.viewport(0, 0, t.width, t.height), he && he(e, s);
     };
-    W();
-    const N = new ResizeObserver(() => {
-      W();
+    z();
+    const P = new ResizeObserver(() => {
+      z();
     });
-    return N.observe(t), se.current = N, () => {
-      N.disconnect();
+    return P.observe(t), ce.current = P, () => {
+      P.disconnect();
     };
-  }, [a, d, le]), ae(() => {
+  }, [a, d, re]), ae(() => {
     if (!a || !a.complete || a.naturalHeight === 0) return;
-    const u = () => {
-      const p = O.current;
-      if (!p) return;
-      const c = X.current, D = q.current, W = d.fontSize * 0.6, N = d.fontSize, _ = I(), b = j.current, r = ee.current;
-      if (c && D && k.current && B.current) {
-        c.viewport(0, 0, p.width, p.height), c.clearColor(0.0196, 0.0196, 0.0196, 1), c.clear(c.COLOR_BUFFER_BIT), c.useProgram(D), c.activeTexture(c.TEXTURE0), c.bindTexture(c.TEXTURE_2D, k.current), c.pixelStorei(c.UNPACK_FLIP_Y_WEBGL, 1), c.texImage2D(c.TEXTURE_2D, 0, c.RGBA, c.RGBA, c.UNSIGNED_BYTE, a), c.activeTexture(c.TEXTURE1), c.bindTexture(c.TEXTURE_2D, P.current);
-        let e = 0;
-        d.colorMode === "green" ? e = 1 : d.colorMode === "amber" ? e = 2 : d.colorMode === "mono" ? e = 3 : d.colorMode === "cyberpunk" && (e = 4);
-        const s = Z.current;
-        c.uniform1i(s.u_video_texture || null, 0), c.uniform1i(s.u_atlas_texture || null, 1), c.uniform1f(s.u_cols || null, b), c.uniform1f(s.u_rows || null, r), c.uniform1f(s.u_char_count || null, _.length), c.uniform1f(s.u_brightness || null, d.brightness), c.uniform1f(s.u_contrast || null, d.contrast), c.uniform1f(s.u_saturation || null, d.saturation), c.uniform1i(s.u_color_mode || null, e), c.uniform1i(s.u_use_sequence || null, d.customDensity ? 1 : 0);
-        const g = H.current;
-        g !== -1 && (c.enableVertexAttribArray(g), c.bindBuffer(c.ARRAY_BUFFER, B.current), c.vertexAttribPointer(g, 2, c.FLOAT, !1, 0, 0)), c.drawArrays(c.TRIANGLES, 0, 6);
+    const x = () => {
+      const y = I.current;
+      if (!y) return;
+      const c = B.current, N = k.current, z = d.fontSize * 0.6, P = d.fontSize, h = Z(), r = oe.current, e = W.current;
+      if (c && N && D.current && X.current) {
+        c.viewport(0, 0, y.width, y.height), c.clearColor(0.0196, 0.0196, 0.0196, 1), c.clear(c.COLOR_BUFFER_BIT), c.useProgram(N), c.activeTexture(c.TEXTURE0), c.bindTexture(c.TEXTURE_2D, D.current), c.pixelStorei(c.UNPACK_FLIP_Y_WEBGL, 1), c.texImage2D(c.TEXTURE_2D, 0, c.RGBA, c.RGBA, c.UNSIGNED_BYTE, a), c.activeTexture(c.TEXTURE1), c.bindTexture(c.TEXTURE_2D, G.current);
+        let s = 0;
+        d.colorMode === "green" ? s = 1 : d.colorMode === "amber" ? s = 2 : d.colorMode === "mono" ? s = 3 : d.colorMode === "cyberpunk" && (s = 4);
+        const u = j.current;
+        c.uniform1i(u.u_video_texture || null, 0), c.uniform1i(u.u_atlas_texture || null, 1), c.uniform1f(u.u_cols || null, r), c.uniform1f(u.u_rows || null, e), c.uniform1f(u.u_char_count || null, h.length), c.uniform1f(u.u_brightness || null, d.brightness), c.uniform1f(u.u_contrast || null, d.contrast), c.uniform1f(u.u_saturation || null, d.saturation), c.uniform1i(u.u_color_mode || null, s), c.uniform1i(u.u_use_sequence || null, d.customDensity ? 1 : 0);
+        const U = K.current;
+        U !== -1 && (c.enableVertexAttribArray(U), c.bindBuffer(c.ARRAY_BUFFER, X.current), c.vertexAttribPointer(U, 2, c.FLOAT, !1, 0, 0)), c.drawArrays(c.TRIANGLES, 0, 6), te && te();
       } else {
-        const e = G.current;
-        if (e) {
-          const s = p.width, g = p.height, { ctx: E } = te(b, r);
-          if (E) {
-            E.drawImage(a, 0, 0, b, r);
-            const o = E.getImageData(0, 0, b, r).data;
-            e.fillStyle = "#010101", e.fillRect(0, 0, s, g);
-            const l = d.brightness, n = d.contrast, y = d.saturation, m = de.current, T = ce.current, x = J.current;
-            for (let w = 0; w < 256; w++) {
-              let R = w;
-              l !== 1 && (R *= l), n !== 1 && (R = (R - 128) * n + 128), m[w] = Math.max(0, Math.min(255, Math.floor(R))), T[w] = w * y, x[w] = w * (1 - y);
+        const s = V.current;
+        if (s) {
+          const u = y.width, U = y.height, { ctx: v } = F(r, e);
+          if (v) {
+            v.drawImage(a, 0, 0, r, e);
+            const i = v.getImageData(0, 0, r, e).data;
+            s.fillStyle = "#010101", s.fillRect(0, 0, u, U);
+            const n = d.brightness, E = d.contrast, T = d.saturation, p = le.current, R = Q.current, w = S.current;
+            for (let g = 0; g < 256; g++) {
+              let $ = g;
+              n !== 1 && ($ *= n), E !== 1 && ($ = ($ - 128) * E + 128), p[g] = Math.max(0, Math.min(255, Math.floor($))), R[g] = g * T, w[g] = g * (1 - T);
             }
-            e.font = `bold ${d.fontSize}px "JetBrains Mono", "Fira Code", Courier, monospace`, e.textAlign = "center", e.textBaseline = "middle";
+            s.font = `bold ${d.fontSize}px "JetBrains Mono", "Fira Code", Courier, monospace`, s.textAlign = "center", s.textBaseline = "middle";
             let L = "";
-            const F = _.length, v = d.colorMode, V = (w, R, oe) => {
-              const $ = Math.min(255, w >> 4 << 4), Re = Math.min(255, R >> 4 << 4), A = Math.min(255, oe >> 4 << 4), he = $ >> 4 << 8 | Re >> 4 << 4 | A >> 4;
-              let ne = Y.current.get(he);
-              return ne || (ne = `rgb(${$},${Re},${A})`, Y.current.set(he, ne)), ne;
+            const b = h.length, O = d.colorMode, Y = (g, $, H) => {
+              const fe = Math.min(255, g >> 4 << 4), A = Math.min(255, $ >> 4 << 4), _e = Math.min(255, H >> 4 << 4), be = fe >> 4 << 8 | A >> 4 << 4 | _e >> 4;
+              let ne = ie.current.get(be);
+              return ne || (ne = `rgb(${fe},${A},${_e})`, ie.current.set(be, ne)), ne;
             };
-            for (let w = 0; w < r; w++) {
-              const R = w * N + N / 2;
-              for (let oe = 0; oe < b; oe++) {
-                const $ = (w * b + oe) * 4, Re = o[$], A = o[$ + 1], he = o[$ + 2], ne = m[Re], Ee = m[A], pe = m[he];
-                let _e = ne, me = Ee, xe = pe;
-                if (y !== 1) {
-                  const C = ne * 77 + Ee * 150 + pe * 29 >> 8;
-                  _e = Math.max(0, Math.min(255, Math.floor(T[ne] + x[C]))), me = Math.max(0, Math.min(255, Math.floor(T[Ee] + x[C]))), xe = Math.max(0, Math.min(255, Math.floor(T[pe] + x[C])));
+            for (let g = 0; g < e; g++) {
+              const $ = g * P + P / 2;
+              for (let H = 0; H < r; H++) {
+                const fe = (g * r + H) * 4, A = i[fe], _e = i[fe + 1], be = i[fe + 2], ne = p[A], Ee = p[_e], me = p[be];
+                let xe = ne, ge = Ee, ye = me;
+                if (T !== 1) {
+                  const _ = ne * 77 + Ee * 150 + me * 29 >> 8;
+                  xe = Math.max(0, Math.min(255, Math.floor(R[ne] + w[_]))), ge = Math.max(0, Math.min(255, Math.floor(R[Ee] + w[_]))), ye = Math.max(0, Math.min(255, Math.floor(R[me] + w[_])));
                 }
-                const be = _e * 77 + me * 150 + xe * 29 >> 8, Ce = be * F >> 8, we = _[Ce] || _[F - 1];
-                if (we === " ")
+                const de = xe * 77 + ge * 150 + ye * 29 >> 8, Ce = de * b >> 8, ve = h[Ce] || h[b - 1];
+                if (ve === " ")
                   continue;
-                let z = "#FFFFFF";
-                if (v === "rgb")
-                  z = V(_e, me, xe);
-                else if (v === "green") {
-                  const C = Math.max(0, Math.min(255, 50 + (be * 205 >> 8)));
-                  z = V(0, C, 30);
-                } else if (v === "amber") {
-                  const C = Math.max(0, Math.min(255, be));
-                  z = V(C, Math.max(0, Math.min(255, C * 166 >> 8)), 0);
-                } else if (v === "mono") {
-                  const C = Math.max(0, Math.min(255, be));
-                  z = V(C, C, C);
-                } else if (v === "cyberpunk") {
-                  const C = be / 255 * 0.6 + w / r * 0.4, S = Math.max(0, Math.min(255, Math.floor(0 * (1 - C) + 255 * C))), ge = Math.max(0, Math.min(255, Math.floor(240 * (1 - C) + 10 * C))), ve = Math.max(0, Math.min(255, Math.floor(255 * (1 - C) + 160 * C)));
-                  z = V(S, ge, ve);
+                let ee = "#FFFFFF";
+                if (O === "rgb")
+                  ee = Y(xe, ge, ye);
+                else if (O === "green") {
+                  const _ = Math.max(0, Math.min(255, 50 + (de * 205 >> 8)));
+                  ee = Y(0, _, 30);
+                } else if (O === "amber") {
+                  const _ = Math.max(0, Math.min(255, de));
+                  ee = Y(_, Math.max(0, Math.min(255, _ * 166 >> 8)), 0);
+                } else if (O === "mono") {
+                  const _ = Math.max(0, Math.min(255, de));
+                  ee = Y(_, _, _);
+                } else if (O === "cyberpunk") {
+                  const _ = de / 255 * 0.6 + g / e * 0.4, Te = Math.max(0, Math.min(255, Math.floor(0 * (1 - _) + 255 * _))), Re = Math.max(0, Math.min(255, Math.floor(240 * (1 - _) + 10 * _))), q = Math.max(0, Math.min(255, Math.floor(255 * (1 - _) + 160 * _)));
+                  ee = Y(Te, Re, q);
                 }
-                z !== L && (e.fillStyle = z, L = z), e.fillText(we, oe * W + W / 2, R);
+                ee !== L && (s.fillStyle = ee, L = ee), s.fillText(ve, H * z + z / 2, $);
               }
             }
           }
         }
+        te && te();
       }
     }, t = requestAnimationFrame(() => {
-      u();
+      x();
     });
     return () => cancelAnimationFrame(t);
-  }, [a, d, le]), /* @__PURE__ */ f(
+  }, [a, d, re]), /* @__PURE__ */ f(
     "canvas",
     {
       id: "ascii-image-display-canvas",
-      ref: O,
-      className: `absolute inset-0 w-full h-full pointer-events-none select-none bg-transparent ${h}`
+      ref: I,
+      className: `absolute inset-0 w-full h-full pointer-events-none select-none bg-transparent ${m}`
     }
   );
 }, et = We(({
   fontSize: a = 7,
   colorMode: d = "rgb",
-  densityPreset: h = "standard",
-  customDensity: fe = "",
-  brightness: le = 1.15,
-  contrast: O = 1.1,
-  saturation: X = 1.25,
-  pdhThreshold: q = 18,
-  className: B = "",
-  imageClassName: k = "",
-  canvasClassName: P = "",
-  asciiOpacity: se = 1,
-  imageOpacity: Z = 0,
-  hoverFontSize: H = 2,
-  hoverSaturation: j = 1,
-  src: ee,
-  alt: M = "",
-  crossOrigin: K = "anonymous",
-  style: G,
-  onLoad: Y,
-  ...de
-}, ce) => {
-  const J = i(null), I = i(null);
-  Ve(ce, () => J.current);
-  const [te, u] = ue(!1), [t, p] = ue(16 / 9), [c, D] = ue(!1), [W, N] = ue(0), r = {
-    fontSize: te ? H : a,
+  densityPreset: m = "standard",
+  customDensity: he = "",
+  brightness: te = 1.15,
+  contrast: re = 1.1,
+  saturation: I = 1.25,
+  pdhThreshold: B = 18,
+  className: k = "",
+  imageClassName: X = "",
+  canvasClassName: D = "",
+  asciiOpacity: G = 1,
+  imageOpacity: ce = 0,
+  hoverFontSize: j = 2,
+  hoverSaturation: K = 1,
+  src: oe,
+  alt: W = "",
+  crossOrigin: M = "anonymous",
+  style: J,
+  onLoad: V,
+  ...ie
+}, le) => {
+  const Q = l(null), S = l(null);
+  Ve(le, () => Q.current);
+  const [Z, F] = ue(!1), [x, t] = ue(16 / 9), [y, c] = ue(!1), [N, z] = ue(!1), [P, h] = ue(0), s = {
+    fontSize: Z ? j : a,
     colorMode: d,
-    densityPreset: h,
-    customDensity: fe,
-    brightness: le,
-    contrast: O,
-    saturation: te ? j : X,
+    densityPreset: m,
+    customDensity: he,
+    brightness: te,
+    contrast: re,
+    saturation: Z ? K : I,
     enableDeltaRendering: !1,
-    pdhThreshold: q,
-    asciiOpacity: se,
-    videoOpacity: Z
-  }, e = (s) => {
-    const g = s.currentTarget;
-    g.naturalWidth && g.naturalHeight && p(g.naturalWidth / g.naturalHeight), D(!0), N((E) => E + 1), Y && Y(s);
+    pdhThreshold: B,
+    asciiOpacity: G,
+    videoOpacity: ce
+  }, u = (v) => {
+    const o = v.currentTarget;
+    o.naturalWidth && o.naturalHeight && t(o.naturalWidth / o.naturalHeight), c(!0), h((i) => i + 1), V && V(v);
+  }, U = () => {
+    z(!0);
   };
   return ae(() => {
-    const s = J.current;
-    s && s.complete && s.naturalWidth > 0 && (p(s.naturalWidth / s.naturalHeight), D(!0), N((g) => g + 1));
-  }, []), /* @__PURE__ */ ie(
+    const v = Q.current;
+    v && v.complete && v.naturalWidth > 0 && (t(v.naturalWidth / v.naturalHeight), c(!0), h((o) => o + 1));
+  }, []), /* @__PURE__ */ se(
     "div",
     {
-      ref: I,
-      onMouseEnter: () => u(!0),
-      onMouseLeave: () => u(!1),
-      className: `relative rounded-xl overflow-hidden bg-[#050505] border border-white/10 group select-none transition-all duration-300 flex items-center justify-center ${B}`,
+      ref: S,
+      onMouseEnter: () => F(!0),
+      onMouseLeave: () => F(!1),
+      className: `relative rounded-xl overflow-hidden bg-[#050505] border border-white/10 group select-none transition-all duration-300 flex items-center justify-center ${k}`,
       style: {
-        aspectRatio: `${t}`,
+        aspectRatio: `${x}`,
         width: "100%",
-        ...G
+        ...J
       },
       children: [
         /* @__PURE__ */ f(
           "img",
           {
-            ref: J,
-            src: ee,
-            alt: M,
-            crossOrigin: K,
-            onLoad: e,
-            style: { opacity: Z },
-            className: `absolute inset-0 w-full h-full object-cover select-none bg-black transition-opacity duration-300 pointer-events-none ${k}`,
-            ...de
+            ref: Q,
+            src: oe,
+            alt: W,
+            crossOrigin: M,
+            onLoad: u,
+            style: { opacity: N ? ce : 0 },
+            className: `absolute inset-0 w-full h-full object-cover select-none bg-black transition-opacity duration-300 pointer-events-none ${X}`,
+            ...ie
           }
         ),
-        c && /* @__PURE__ */ f(
+        y && /* @__PURE__ */ f(
           "div",
           {
-            className: `absolute inset-0 w-full h-full pointer-events-none select-none transition-opacity duration-300 ${P}`,
-            style: { opacity: se },
+            className: `absolute inset-0 w-full h-full pointer-events-none select-none transition-opacity duration-300 ${D}`,
+            style: { opacity: N ? G : 0 },
             children: /* @__PURE__ */ f(
               Ze,
               {
-                imageElement: J.current,
-                settings: r,
-                triggerRender: W
+                imageElement: Q.current,
+                settings: s,
+                triggerRender: P,
+                onFirstRender: U
               }
             )
           }

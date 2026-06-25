@@ -5,6 +5,7 @@ interface AsciiImageCanvasProps {
     settings: AsciiSettings;
     className?: string;
     onDimensionsUpdate?: (width: number, height: number) => void;
+    onFirstRender?: () => void;
     triggerRender?: number;
 }
 export declare const AsciiImageCanvas: React.FC<AsciiImageCanvasProps>;
