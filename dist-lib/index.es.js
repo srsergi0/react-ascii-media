@@ -930,7 +930,7 @@ const Ze = ({
   hoverSaturation: j = 1,
   src: ee,
   alt: M = "",
-  crossOrigin: K,
+  crossOrigin: K = "anonymous",
   style: G,
   onLoad: Y,
   ...de

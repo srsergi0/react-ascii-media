@@ -37,7 +37,7 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
   hoverSaturation = 1.0,
   src,
   alt = '',
-  crossOrigin,
+  crossOrigin = "anonymous",
   style,
   onLoad,
   ...restImageProps
