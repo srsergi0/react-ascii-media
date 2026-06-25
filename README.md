@@ -68,6 +68,8 @@ function ImageDemo() {
 | `asciiOpacity` | number | 1.0 | ASCII layer opacity (0.0–1.0) |
 | `videoOpacity` / `imageOpacity` | number | 0.0 | Original media opacity (0.0–1.0) for comparison overlays |
 | `customControls` | boolean | false | Show custom video player controls (CodeVideo only) |
+| `onHover` | `(hovered: boolean) => void` | — | Callback when mouse enters/leaves |
+| `onClick` | `() => void` | — | Callback when clicked |
 
 ## Browser Support
 
