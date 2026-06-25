@@ -17,6 +17,7 @@ export interface CodeImageProps extends React.ImgHTMLAttributes<HTMLImageElement
   imageOpacity?: number;
   hoverFontSize?: number;
   hoverSaturation?: number;
+  rounded?: boolean;
 }
 
 export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
@@ -35,6 +36,7 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
   imageOpacity = 0.0,
   hoverFontSize = 2,
   hoverSaturation = 1.0,
+  rounded = false,
   src,
   alt = '',
   crossOrigin = "anonymous",
@@ -100,7 +102,7 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
       ref={containerRef}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`relative rounded-xl overflow-hidden bg-[#050505] border border-white/10 group select-none transition-all duration-300 flex items-center justify-center ${className}`}
+      className={`relative overflow-hidden bg-[#050505] border border-white/10 group select-none transition-all duration-300 flex items-center justify-center ${rounded ? 'rounded-xl' : ''} ${className}`}
       style={{
         aspectRatio: `${aspectRatio}`,
         width: '100%',

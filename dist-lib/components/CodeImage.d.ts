@@ -15,5 +15,6 @@ export interface CodeImageProps extends React.ImgHTMLAttributes<HTMLImageElement
     imageOpacity?: number;
     hoverFontSize?: number;
     hoverSaturation?: number;
+    rounded?: boolean;
 }
 export declare const CodeImage: React.ForwardRefExoticComponent<CodeImageProps & React.RefAttributes<HTMLImageElement>>;
