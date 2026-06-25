@@ -20,7 +20,7 @@ export default defineConfig({
       fileName: (format) => format === 'cjs' ? 'index.cjs' : `index.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: [/^react(\/.*)?$/, /^react-dom(\/.*)?$/],
       output: {
         globals: {
           react: 'React',

@@ -1,6 +1,6 @@
 {
   "name": "react-ascii-media",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Real-time video & image to full-color RGB ASCII art converter. WebGL-accelerated React components with 60fps performance.",
   "type": "module",
   "main": "dist-lib/index.cjs",
@@ -57,17 +57,14 @@
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
-  "dependencies": {
-    "@google/genai": "^2.4.0",
-    "@tailwindcss/vite": "^4.1.14",
-    "@vitejs/plugin-react": "^5.0.4",
-    "lucide-react": "^0.546.0",
-    "motion": "^12.23.24"
-  },
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
