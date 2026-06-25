@@ -17,7 +17,7 @@ export default defineConfig({
       entry: path.resolve(__dirname, 'src/lib/index.ts'),
       name: 'ReactAsciiMedia',
       formats: ['es', 'cjs', 'umd'],
-      fileName: (format) => `index.${format}.js`,
+      fileName: (format) => format === 'cjs' ? 'index.cjs' : `index.${format}.js`,
     },
     rollupOptions: {
       external: ['react', 'react-dom'],

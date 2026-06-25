@@ -15,6 +15,8 @@ export interface CodeImageProps extends React.ImgHTMLAttributes<HTMLImageElement
   canvasClassName?: string;
   asciiOpacity?: number;
   imageOpacity?: number;
+  hoverFontSize?: number;
+  hoverSaturation?: number;
 }
 
 export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
@@ -31,9 +33,11 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
   canvasClassName = '',
   asciiOpacity = 1.0,
   imageOpacity = 0.0,
+  hoverFontSize = 2,
+  hoverSaturation = 1.0,
   src,
   alt = '',
-  crossOrigin = 'anonymous',
+  crossOrigin,
   style,
   onLoad,
   ...restImageProps
@@ -43,23 +47,27 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
 
   useImperativeHandle(ref, () => localImageRef.current as HTMLImageElement);
 
+  const [hovered, setHovered] = useState(false);
+  const [aspectRatio, setAspectRatio] = useState(16 / 9);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [triggerRender, setTriggerRender] = useState(0);
+
+  const effectiveFontSize = hovered ? hoverFontSize : fontSize;
+  const effectiveSaturation = hovered ? hoverSaturation : saturation;
+
   const settings: AsciiSettings = {
-    fontSize,
+    fontSize: effectiveFontSize,
     colorMode: colorMode as ColorMode,
     densityPreset: densityPreset as DensityPreset,
     customDensity,
     brightness,
     contrast,
-    saturation,
+    saturation: effectiveSaturation,
     enableDeltaRendering: false,
     pdhThreshold,
     asciiOpacity,
     videoOpacity: imageOpacity,
   };
-
-  const [aspectRatio, setAspectRatio] = useState(16 / 9);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [triggerRender, setTriggerRender] = useState(0);
 
   const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
@@ -73,9 +81,20 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
     }
   };
 
+  useEffect(() => {
+    const img = localImageRef.current;
+    if (img && img.complete && img.naturalWidth > 0) {
+      setAspectRatio(img.naturalWidth / img.naturalHeight);
+      setImageLoaded(true);
+      setTriggerRender(prev => prev + 1);
+    }
+  }, []);
+
   return (
     <div
       ref={containerRef}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       className={`relative rounded-xl overflow-hidden bg-[#050505] border border-white/10 group select-none transition-all duration-300 flex items-center justify-center ${className}`}
       style={{
         aspectRatio: `${aspectRatio}`,
