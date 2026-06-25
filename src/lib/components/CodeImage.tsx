@@ -15,9 +15,8 @@ export interface CodeImageProps extends React.ImgHTMLAttributes<HTMLImageElement
   canvasClassName?: string;
   asciiOpacity?: number;
   imageOpacity?: number;
-  hoverFontSize?: number;
-  hoverSaturation?: number;
-  rounded?: boolean;
+  onHover?: (hovered: boolean) => void;
+  onClick?: () => void;
 }
 
 export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
@@ -34,9 +33,8 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
   canvasClassName = '',
   asciiOpacity = 1.0,
   imageOpacity = 0.0,
-  hoverFontSize = 2,
-  hoverSaturation = 1.0,
-  rounded = false,
+  onHover,
+  onClick,
   src,
   alt = '',
   crossOrigin = "anonymous",
@@ -49,14 +47,13 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
 
   useImperativeHandle(ref, () => localImageRef.current as HTMLImageElement);
 
-  const [hovered, setHovered] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(16 / 9);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [canvasReady, setCanvasReady] = useState(false);
   const [triggerRender, setTriggerRender] = useState(0);
 
-  const effectiveFontSize = hovered ? hoverFontSize : fontSize;
-  const effectiveSaturation = hovered ? hoverSaturation : saturation;
+  const effectiveFontSize = fontSize;
+  const effectiveSaturation = saturation;
 
   const settings: AsciiSettings = {
     fontSize: effectiveFontSize,
@@ -100,9 +97,10 @@ export const CodeImage = forwardRef<HTMLImageElement, CodeImageProps>(({
   return (
     <div
       ref={containerRef}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className={`relative overflow-hidden bg-[#050505] border border-white/10 group select-none transition-all duration-300 flex items-center justify-center ${rounded ? 'rounded-xl' : ''} ${className}`}
+      onMouseEnter={() => onHover?.(true)}
+      onMouseLeave={() => onHover?.(false)}
+      onClick={onClick}
+      className={`relative overflow-hidden bg-[#050505] border border-white/10 group select-none transition-all duration-300 flex items-center justify-center ${className}`}
       style={{
         aspectRatio: `${aspectRatio}`,
         width: '100%',
